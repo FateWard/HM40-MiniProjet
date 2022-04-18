@@ -61,6 +61,9 @@ void FittsController::changeGraphHome(){
     }
 }
 
+/**
+ * Méthode qui change la fenêtre pour afficher le graphique en grand
+ */
 void FittsController::chartZoom()
 {
     this->fittsView->mainStack->setCurrentIndex(2);
@@ -92,6 +95,9 @@ void FittsController::cancel() {
     this->fittsView->mainStack->setCurrentIndex(0);
 }
 
+/**
+ * Méthode appelée lorsque l'utilisateur sort de la fenêtre zoomant sur le graphique
+ */
 void FittsController::zoomCancel()
 {
     this->fittsView->mainStack->setCurrentIndex(0);
@@ -277,10 +283,10 @@ void FittsController::calculateResultHome() {
 
         axis->append(QString::number(i + 1) + "<br />T: "+QString::number(T)+"<br />D: " + QString::number(D),i);
 
-        //Ajout d'une nouvelle courbe : le temps exécution (ordonnée) en fonction de la distance relative log(2D/L) en abscisse
+        //Ajout d'une nouvelle courbe : le temps exécution (ordonnée) en fonction de la distance relative log(D/L + 1) en abscisse
         //On utilise D en ordonnée et value en abscisse
 
-        DistRelatif.append(log(2*D/this->fittsModel->cercleSize[i]));
+        DistRelatif.append(log(D/this->fittsModel->cercleSize[i] + 1));
 
     }
 

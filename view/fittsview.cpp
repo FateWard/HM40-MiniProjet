@@ -28,9 +28,9 @@ FittsView::FittsView(FittsController *fittsController, FittsModel *fittsModel) :
     connect(backBtn2,SIGNAL(clicked()),fittsController,SLOT(zoomCancel()));
 
     connect(graphicView, SIGNAL(mouseClicked(int,int)), fittsController, SLOT(cibleClicked(int,int)));
-    connect(switchGraphHome, SIGNAL(clicked()),fittsController,SLOT(changeGraphHome()));
-    connect(switchMode, SIGNAL(clicked()),fittsController,SLOT(changeMode()));
-    connect(graphZoom, SIGNAL(clicked()),fittsController, SLOT(chartZoom()));
+    connect(switchGraphHome, SIGNAL(clicked()),fittsController,SLOT(changeGraphHome())); //Bouton de changement de graphique
+    connect(switchMode, SIGNAL(clicked()),fittsController,SLOT(changeMode())); //Bouton de changer de mode jour/nuit
+    connect(graphZoom, SIGNAL(clicked()),fittsController, SLOT(chartZoom())); //Bouton permettant le zoom sur le graphique
 
     // SpinBox values update
     connect(aValue,SIGNAL(valueChanged(double)),fittsController,SLOT(aValueChanged(double)));
@@ -156,11 +156,11 @@ void FittsView::change_color(bool choix){
 
 void FittsView::initWindows() {
 
-    mainWidget = new QWidget;
+    mainWidget = new QWidget; //Widget principal
     this->setCentralWidget(mainWidget);
     this->setStyleSheet("QWidget{background-color:" + color_bg + ";}");
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(mainWidget);
+    QVBoxLayout *mainLayout = new QVBoxLayout(mainWidget); //Page principale
     mainLayout->setMargin(0);
 
     mainStack = new QStackedLayout;
@@ -169,6 +169,8 @@ void FittsView::initWindows() {
 
     QWidget *settingsWidget = new QWidget;
     mainStack->addWidget(settingsWidget);
+
+
 
     QHBoxLayout *settingsLayout = new QHBoxLayout(settingsWidget);
     QVBoxLayout *settingsLayoutLeft = new QVBoxLayout(settingsWidget);
@@ -203,35 +205,37 @@ void FittsView::initWindows() {
 //Bouton de switch de mode
     switchMode = new QToolButton(this);
     switchMode->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    switchMode->setMinimumSize(130, 130);
-    switchMode->setMaximumSize(130, 130);
+    switchMode->setMinimumSize(120, 120);
+    switchMode->setMaximumSize(120, 120);
     switchMode->setStyleSheet("QToolButton{color: "+color_light_grey+"; border-radius:" + button_radius +"; font: bold 10px 'ROBOTO'; padding: 10px; margin-right: 40px}");
     switchMode->setCursor(Qt::PointingHandCursor);
     switchMode->setIcon(QIcon(":/icons/dayModeButton"));
     switchMode->setIconSize(QSize(500, 500));
 
 
-/////////////////////////////////////////////////////
+//Bouton pour faire un zoom sur le graphique
     graphZoom = new QToolButton(this);
     graphZoom->setIcon(QIcon(":/icons/zoomButton"));
     graphZoom->setIconSize(QSize(130,130));
     graphZoom->setMinimumSize(50, 50);
     graphZoom->setMaximumSize(50, 50);
     graphZoom->setIconSize(graphZoom->size());
-/////////////////////////////////////////////////////
 
     buttonLayout->setMargin(20);
     buttonLayout->addStretch();
 
     buttonLayout->addWidget(switchGraphHome); //Ajout du bouton de switch du graphique
     buttonLayout->addWidget(switchMode); //Ajout du bouton de switch de mode
-    buttonLayout->addWidget(graphZoom);
+    buttonLayout->addWidget(graphZoom); //Ajout du bouton de zoom sur le graphique
 
     rightBoxLayout->addWidget(frameRight); //Ajout
     settingsLayout->addLayout(rightBoxLayout);
 
 
-    //Droite
+    /**
+     * Partie droite basse de la fenêtre
+     * Sroll area qui indique les tests déjà efféctué pour re-afficher le graphique qui leur ait associé
+     */
 
     label1 = new QLabel("Liste des tests");
     label1->setStyleSheet("color: #ffffff; font: bold 30px 'ROBOTO'; padding: 10px");
@@ -252,6 +256,9 @@ void FittsView::initWindows() {
 
 
 
+    /**
+     * Recherche dans le fichier de suavegarde les tests déjà efféctué pour les afficher
+     */
     reloadHisto();
 
 
@@ -261,11 +268,13 @@ void FittsView::initWindows() {
     scrollArea->setStyleSheet("QScrollArea{border: none} QScrollBar:vertical{background-color: #242424;} QScrollBar::handle:vertical{background-color: #323232;} QScrollBar::add-page:vertical { background-color: #242424; } QScrollBar::sub-page:vertical { background-color: #242424; }");
     settingsLayoutRight->addWidget(scrollArea);
 
-    //Droite - end
+    //Droite basse - fin
 
 
-    //Gauche
-
+    //Gauche et centre
+    /**
+     * Partie gauche avec les stats ainsi que la partie centrale montrant le graphique
+     */
     QHBoxLayout *settingsLayoutLeftTop = new QHBoxLayout();
     QHBoxLayout *settingsLayoutLeftBottom = new QHBoxLayout();
     settingsLayoutLeft->addLayout(settingsLayoutLeftTop);
@@ -368,11 +377,13 @@ void FittsView::initWindows() {
     graphHomeLayout->addWidget(plotHome);
     graphHomeLayout->addWidget(plotHomeDistance);
 
-    //Gauche Top - end
+    //Gauche et centre - end
 
 
-    //Gauche Bottom
-
+    //Gauche Bottom + Centre bas
+    /**
+     * Partie sur les paramètres a et b influant sur la courbe théorique ainsi que la partie centrale basse avec la configuration du prochain test
+     */
     cardBottom = new QFrame();
     cardBottom->setMinimumWidth(275);
     cardBottom->setMaximumWidth(275);
@@ -398,7 +409,7 @@ void FittsView::initWindows() {
     cardBottomLayout->addWidget(bottomCardSeparator);
 
     label4 = new QLabel();
-    label4->setText("a + b*log2(2D/L)");
+    label4->setText("a + b*log2(D/L + 1)");
     label4->setStyleSheet("font: italic 18px 'ROBOTO'; color:" + color_light_grey);
     label4->setAlignment(Qt::AlignCenter);
     cardBottomLayout->addWidget(label4);
@@ -469,11 +480,9 @@ void FittsView::initWindows() {
     nbCible->setMaximum(100);
     nbCible->setMinimum(5);
     nbCible->setSingleStep(1);
-    //QSize cibleSize(100,10);
     nbCible->setAlignment(Qt::AlignCenter);
     nbCible->setCursor(Qt::PointingHandCursor);
     nbCible->setStyleSheet("QSpinBox{font: 26px 'ROBOTO'; color:" + color_white + ";} QSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButtonDark); width: 30px; height: 30px; margin-left: 40px} QSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButtonDark); width: 30px; height: 30px; margin-right: 40px}");;
-    //nbCible->setMinimumWidth(100);
     configLayoutItem->addWidget(nbCible);
     configLayout->addLayout(configLayoutItem);
 
@@ -540,11 +549,12 @@ void FittsView::initWindows() {
     startBtn->setStyleSheet("QPushButton{color: "+color_white+"; background-color: " + color_blue + "; border-radius:" + button_radius +"; font: bold 20px 'ROBOTO'; padding: 20px; margin: 0px 30px} QPushButton:hover{background-color: " + color_blue_focus + "};");
     settingsLayoutLeftBottomConfig->addWidget(startBtn);
 
-    //Gauche Bottom - end
-
-    //Gauche - end
+    //Gauche Bottom + Centre bas - end
 
     // Test part
+    /**
+     * Partie sur le graphique qui affiche le temps mis par l'utilisateur en fonction de la distance et du diamètre du cercle
+     */
 
     QWidget *testWidget = new QWidget;
     mainStack->addWidget(testWidget);
@@ -582,8 +592,9 @@ void FittsView::initWindows() {
 
     btnLayout->addSpacing(300);
 
-////////////////////////////////////////////////////////////////////////////
-    //Widget of graph
+    /**
+     * Initialisation de la fenêtre quand l'utilisateur souhaite zommer sur le graphique
+     */
 
     QWidget *graph = new QWidget;
     mainStack->addWidget(graph);
@@ -602,7 +613,7 @@ void FittsView::initWindows() {
     showingLayout->addWidget(chartZoomed);
     showingLayout->addWidget(backBtn2);
 
-////////////////////////////////////////////////////////////////////////////
+
 }
 
 void FittsView::updateTestMsg() {
