@@ -44,19 +44,19 @@ void FittsController::changeMode(){
 }
 
 void FittsController::changeGraphHome(){
-    if(this->fittsView->switchGraphHome->minimumHeight() == 250){
+    if(this->fittsView->switchGraphHome->minimumHeight() == 150){
         this->fittsView->switchGraphHome->setIcon(QIcon(":/icons/switchGraphe_2"));
-        this->fittsView->switchGraphHome->setMinimumHeight(249);
+        this->fittsView->switchGraphHome->setMinimumHeight(149);
         this->fittsView->plotHomeDistance->setVisible(true);
         this->fittsView->plotHome->setVisible(false);
-        this->fittsView->graphTitleHome->setText("Temps en fonction de la distance");
+        this->fittsView->graphTitleHome->setText("Temps = f( log(D/L+1) )");
         this->fittsView->isPlotHome = false;
     }else{
         this->fittsView->switchGraphHome->setIcon(QIcon(":/icons/switchGraphe_1"));
-        this->fittsView->switchGraphHome->setMinimumHeight(250);
+        this->fittsView->switchGraphHome->setMinimumHeight(150);
         this->fittsView->plotHomeDistance->setVisible(false);
         this->fittsView->plotHome->setVisible(true);
-        this->fittsView->graphTitleHome->setText("Temps pour atteindre une cible");
+        this->fittsView->graphTitleHome->setText("Temps = f( cible )");
         this->fittsView->isPlotHome = true;
     }
 }

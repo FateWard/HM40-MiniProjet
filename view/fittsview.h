@@ -55,7 +55,7 @@ private:
 
     QToolButton *switchGraphHome;
     QToolButton *switchMode;
-    QPushButton *graphZoom;
+    QToolButton *graphZoom;
     bool isPlotHome = true;
     bool hasSimulated = false;
 

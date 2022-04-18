@@ -47,6 +47,7 @@ void FittsView::change_color(bool choix){
 
 
     if(choix){
+        this->switchMode->setIcon(QIcon(":/icons/nightModeButton"));
         this->setStyleSheet("QWidget{background-color:" + color_red_grey + ";}");
         frameRight->setStyleSheet("background-color: " + color_red_grey );
         scrollFrame->setStyleSheet("background-color: " + color_white );
@@ -107,6 +108,8 @@ void FittsView::change_color(bool choix){
 
 
     }else{
+
+        this->switchMode->setIcon(QIcon(":/icons/dayModeButton"));
 
 
         label3->setStyleSheet("font: bold 20px 'ROBOTO'; color:" + color_white);
@@ -191,31 +194,30 @@ void FittsView::initWindows() {
     switchGraphHome->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     switchGraphHome->setMinimumWidth(120);
     switchGraphHome->setMaximumWidth(120);
-    switchGraphHome->setMinimumHeight(250);
-    switchGraphHome->setMaximumHeight(250);
-    switchGraphHome->setText("Swich graph");
+    switchGraphHome->setMinimumHeight(150);
+    switchGraphHome->setMaximumHeight(150);
     switchGraphHome->setStyleSheet("QToolButton{color: "+color_light_grey+"; border-radius:" + button_radius +"; font: bold 10px 'ROBOTO'; padding: 10px; margin-right: 40px}");
     switchGraphHome->setCursor(Qt::PointingHandCursor);
     switchGraphHome->setIcon(QIcon(":/icons/switchGraphe_1"));
-    switchGraphHome->setIconSize(QSize(130, 130));
+    switchGraphHome->setIconSize(switchGraphHome->size());
 //Bouton de switch de mode
     switchMode = new QToolButton(this);
     switchMode->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    switchMode->setMinimumWidth(120);
-    switchMode->setMaximumWidth(120);
-    switchMode->setMinimumHeight(250);
-    switchMode->setMaximumHeight(250);
-    switchMode->setText("Swich graph");
+    switchMode->setMinimumSize(130, 130);
+    switchMode->setMaximumSize(130, 130);
     switchMode->setStyleSheet("QToolButton{color: "+color_light_grey+"; border-radius:" + button_radius +"; font: bold 10px 'ROBOTO'; padding: 10px; margin-right: 40px}");
     switchMode->setCursor(Qt::PointingHandCursor);
-    switchMode->setIcon(QIcon(":/icons/switchGraphe_1"));
-    switchMode->setIconSize(QSize(130, 130));
+    switchMode->setIcon(QIcon(":/icons/dayModeButton"));
+    switchMode->setIconSize(QSize(500, 500));
 
 
 /////////////////////////////////////////////////////
-    graphZoom = new QPushButton("Zoom", this);
-    graphZoom->setMinimumSize(50, 100);
-    graphZoom->setMaximumSize(50, 100);
+    graphZoom = new QToolButton(this);
+    graphZoom->setIcon(QIcon(":/icons/zoomButton"));
+    graphZoom->setIconSize(QSize(130,130));
+    graphZoom->setMinimumSize(50, 50);
+    graphZoom->setMaximumSize(50, 50);
+    graphZoom->setIconSize(graphZoom->size());
 /////////////////////////////////////////////////////
 
     buttonLayout->setMargin(20);
@@ -322,7 +324,7 @@ void FittsView::initWindows() {
     titleLegend->addSpacing(50);
     graphTitleHome = new QLabel(this);
     graphTitleHome->setMinimumWidth(500);
-    graphTitleHome->setText("Temps");
+    graphTitleHome->setText("Temps = f( cible )");
     graphTitleHome->setStyleSheet("font: bold 30px 'ROBOTO'; color:" + color_white);
     titleLegend->addWidget(graphTitleHome);
 
