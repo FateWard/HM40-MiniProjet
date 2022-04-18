@@ -10,8 +10,6 @@
         <file alias="plusButton">icons/plusButton.svg</file>
         <file alias="moinsButtonDark">icons/moinsButton2.svg</file>
         <file alias="plusButtonDark">icons/plusButton2.svg</file>
-        <file alias="darkModeButton">icons/darkMode.svg</file>
-        <file alias="whiteModeButton">icons/whiteMode.svg</file>
         <file alias="dayModeButton">icons/DayModeButton.png</file>
         <file alias="nightModeButton">icons/NightModButton.png</file>
         <file alias="zoomButton">icons/agrandir.png</file>
