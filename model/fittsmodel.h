@@ -15,8 +15,13 @@ class FittsModel
 {
 public:
     FittsModel();
-    QJsonObject writeDataJson();
+    QJsonObject writeDataJson();    
     QJsonObject QPointToQJsonobject(QPoint);
+
+    //Ajouté par Samba
+    void writeDataModel(QJsonObject dataItem);
+    QPoint QJsonObjectToQPoint(QJsonValueRef jsonPoint);
+
 
 private:
 
