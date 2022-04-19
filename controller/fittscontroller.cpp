@@ -19,7 +19,7 @@ void FittsController::start() {
 
     this->fittsView->show();
     startSimulation();
-
+    this->fittsView->mainStack->setCurrentIndex(0); //pour revenir sur l'écran des settings après initialisation de la simulation
 }
 
 void FittsController::startSimulation() {
@@ -39,10 +39,6 @@ void FittsController::quit() {
     QApplication::quit();
 }
 
-void FittsController::changeMode(){
-    this->fittsView->change_color(true);
-}
-
 void FittsController::changeGraphHome(){
     if(this->fittsView->switchGraphHome->minimumHeight() == 250){
         this->fittsView->switchGraphHome->setIcon(QIcon(":/icons/switchGraphe_2"));
@@ -50,74 +46,37 @@ void FittsController::changeGraphHome(){
         this->fittsView->plotHomeDistance->setVisible(true);
         this->fittsView->plotHome->setVisible(false);
         this->fittsView->graphTitleHome->setText("Temps en fonction de la distance");
-        this->fittsView->isPlotHome = false;
     }else{
         this->fittsView->switchGraphHome->setIcon(QIcon(":/icons/switchGraphe_1"));
         this->fittsView->switchGraphHome->setMinimumHeight(250);
         this->fittsView->plotHomeDistance->setVisible(false);
         this->fittsView->plotHome->setVisible(true);
         this->fittsView->graphTitleHome->setText("Temps pour atteindre une cible");
-        this->fittsView->isPlotHome = true;
     }
-}
-
-void FittsController::chartZoom()
-{
-    this->fittsView->mainStack->setCurrentIndex(2);
-    if(this->fittsView->hasSimulated)
-    {
-        this->calculateResultHome();
-        if(this->fittsView->isPlotHome)
-        {
-            this->fittsView->chartZoomed->setChart(this->chartHome);
-        }
-        else
-        {
-            this->fittsView->chartZoomed->setChart(this->chartDistanceHome);
-        }
-    }
-
 }
 
 
 void FittsController::backToSettings() {
+    //modifié par Samba
     this->fittsView->mainStack->setCurrentIndex(0);
     this->calculateResultHome();
     this->addHisto();
-    this->fittsView->displayResults();
+    FittsView *f2 = this->fittsView;
+    this->fittsView->destroy();
+    this->fittsView = new FittsView(this, this->fittsModel);
+    this->start();
+    loadGraph(this->fittsView->lstEyeButtons.size()-1);
 }
-
 
 void FittsController::cancel() {
     this->fittsView->mainStack->setCurrentIndex(0);
 }
 
-void FittsController::zoomCancel()
-{
-    this->fittsView->mainStack->setCurrentIndex(0);
-    if(this->fittsView->hasSimulated)
-    {
-        this->calculateResultHome();
-        if(this->fittsView->isPlotHome)
-        {
-            this->fittsView->plotHome->setChart(this->chartHome);
-        }
-        else
-        {
-            this->fittsView->plotHomeDistance->setChart(this->chartDistanceHome);
-        }
-    }
-
-}
-
-
 void FittsController::aValueChanged(double value) {
     this->fittsModel->a = value;
-    calculateResultHome();
 }
 void FittsController::bValueChanged(double value) {
     this->fittsModel->b = value;
-    calculateResultHome();
 }
 void FittsController::nbCibleChanged(int value) {
     this->fittsModel->nbCible = value;
@@ -163,7 +122,6 @@ void FittsController::nextCible() {
 
     // On stop si c'est finis
     if(this->fittsModel->cibleLeft == 0) {
-        this->fittsView->hasSimulated = true;
         this->finish();
         return;
     }
@@ -226,7 +184,7 @@ void FittsController::initGame() {
 
 void FittsController::calculateResultHome() {
 
-    chartHome = new QChart;
+    QChart *chartHome = new QChart;
     this->fittsView->plotHome->setChart(chartHome);
     this->fittsView->plotHome->setRenderHint(QPainter::Antialiasing);
     chartHome->setAnimationOptions(QChart::AllAnimations);
@@ -240,7 +198,7 @@ void FittsController::calculateResultHome() {
     QCategoryAxis *axis = new QCategoryAxis;
 
     //New plotHomeDistance
-    chartDistanceHome = new QChart;
+    QChart *chartDistanceHome = new QChart;
     this->fittsView->plotHomeDistance->setChart(chartDistanceHome);
     this->fittsView->plotHomeDistance->setRenderHint(QPainter::Antialiasing);
     chartDistanceHome->setAnimationOptions(QChart::AllAnimations);
@@ -261,16 +219,15 @@ void FittsController::calculateResultHome() {
 
     for(int i = 0; i < this->fittsModel->nbCible; ++i) {
         //Courbe Experimental
+        //TODO : Rajouter les temps au fichier json
         double T = this->fittsModel->times[i];
         listeTemps.append(T);
         expSeries->append(i,T);
         double D = sqrt(pow(this->fittsModel->clickPoints[i].x() - this->fittsModel->cercleCenter[i].x(),2) + pow(this->fittsModel->clickPoints[i].y() - this->fittsModel->cercleCenter[i].y(),2));
 
-
-
         //Courbe Theorique
         // On multiplie par 1000 pour être en ms
-        double value = (this->fittsModel->a * 1000) + ((this->fittsModel->b * 1000) * log2(((D / this->fittsModel->cercleSize[i])) + 1));
+        double value = (this->fittsModel->a * 1000) + ((this->fittsModel->b * 1000) * log2((D / this->fittsModel->cercleSize[i]) + 1));
         listeTempsCalcule.append(value);
         fittsValues.append(value);
         fittsSeries->append(i,value);
@@ -410,14 +367,16 @@ void FittsController::calculateResultHome() {
 
 }
 
+//ajoute un enregistrement au fichier data.json*
+//modifié par Samba
 void FittsController::addHisto(){
     this->histModel->prepend(*this->fittsModel);
 
-    QDir().mkpath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation));
+    //Crée le répertoire si n'existe pas encore
+    QDir().mkpath(QDir::currentPath()+"/dataFitts");
 
-    qDebug() << QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
-
-    QString jsonPath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/data.json";
+    //chemin où est enregistré le fichier data.json
+    QString jsonPath = QDir::currentPath()+"/dataFitts/data.json";
 
     QFile fileReader(jsonPath);
     fileReader.open(QIODevice::ReadOnly);
@@ -436,9 +395,44 @@ void FittsController::addHisto(){
     fileWriter.close();
 }
 
+//Ajouté par Samba
+//Supprime un enregistrement du fichier json et recharge la nouvelle page avec liste maj
+void FittsController::deleteHisto(int index){
+    QMessageBox::StandardButton confirm;
+    confirm = QMessageBox::question(this->fittsView,"Demande Suppression","Êtes vous sur de vouloir supprimer ?",
+                                    QMessageBox::Yes|QMessageBox::Cancel);
+    if(confirm == QMessageBox::Yes){
+        QString jsonPath = QDir::currentPath()+"/dataFitts/data.json";
+
+        QFile fileReader(jsonPath);
+        fileReader.open(QIODevice::ReadOnly);
+        QJsonDocument json = QJsonDocument::fromJson(fileReader.readAll());
+        QJsonArray array = json.array();
+
+        array.removeAt(index);
+        QJsonDocument newJson(array);
+        fileReader.close();
+
+        QFile fileWriter(jsonPath);
+        fileWriter.open(QIODevice::WriteOnly);
+        fileWriter.write(newJson.toJson());
+        fileWriter.close();
+
+        this->histModel->removeAt(index);
+
+        //recharger fittsView avec la liste des tests mis à jour
+        FittsView *f2 = this->fittsView;
+        this->fittsView->destroy();
+        this->fittsView = new FittsView(this, this->fittsModel);
+        this->start();
+    }
+}
+
+//va rechercher le fichier json, le lit, le parse et retourne un tableau avec chaque élément séparé
 QJsonArray FittsController::getHisto(){
 
-    QString jsonPath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/data.json";
+    //modifié par Samba
+    QString jsonPath = QDir::currentPath()+"/dataFitts/data.json";
 
     QFile fileReader(jsonPath);
     fileReader.open(QIODevice::ReadOnly);
@@ -448,5 +442,15 @@ QJsonArray FittsController::getHisto(){
     fileReader.close();
 
     return array;
+}
 
+//Fonction pour changer le graphique si un enregistrement est choisi
+//Ajouté par Samba
+void FittsController::loadGraph(int index){
+    //recuperer l'enregistrement correspondant à l'index
+    QJsonObject dataItem = getHisto().at(index).toObject();
+    //mettre les données de l'enregistrement dans le fittsModel
+    this->fittsModel->writeDataModel(dataItem);
+    this->calculateResultHome();
+    this->fittsView->displayResults();
 }

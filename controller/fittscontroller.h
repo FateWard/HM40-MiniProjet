@@ -6,7 +6,6 @@
 #include <QApplication>
 #include <QDebug>
 #include <QtGlobal>
-#include <QtCharts>
 #include <QChart>
 #include <QLineSeries>
 #include <QChartView>
@@ -53,18 +52,12 @@ private:
 
     QElapsedTimer *timer;
 
-    QChart *chartHome;
-    QChart *chartDistanceHome;
-
 private slots:
     void quit();
     void startSimulation();
     void backToSettings();
     void cancel();
-    void zoomCancel();
     void changeGraphHome();
-    void changeMode();
-    void chartZoom();
 
     void aValueChanged(double value);
     void bValueChanged(double value);
@@ -73,6 +66,10 @@ private slots:
     void maxSizeChanged(int value);
 
     void cibleClicked(int x, int y);
+
+    //Ajouté par Samba
+    void deleteHisto(int index);
+    void loadGraph(int index);
 };
 
 #endif // FITTSCONTROLLER_H
