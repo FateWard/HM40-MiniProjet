@@ -39,7 +39,6 @@ public:
     void initWindows();
     void sizeWindows();
     void reloadHisto();
-    void change_color(bool);
 
 private:
     void updateTestMsg();
@@ -51,13 +50,13 @@ private:
 
     QPushButton *startBtn;
     QPushButton *backBtn;
-    QPushButton *backBtn2;
-
     QToolButton *switchGraphHome;
-    QToolButton *switchMode;
-    QPushButton *graphZoom;
-    bool isPlotHome = true;
-    bool hasSimulated = false;
+
+    //Ajouté par Samba
+    QList<QToolButton *> lstEyeButtons;
+    QList<QToolButton *> lstDeleteButtons;
+    QSignalMapper *eyeSignalMapper;
+    QSignalMapper *deleteSignalMapper;
 
     QDoubleSpinBox *aValue;
     QDoubleSpinBox *bValue;
@@ -82,37 +81,6 @@ private:
 
     QChartView *plotHome;
     QChartView *plotHomeDistance;
-    QChartView *chartZoomed;
-
-    QWidget *mainWidget = new QWidget;
-      QFrame *frameRight = new QFrame();
-      QFrame *scrollFrame = new QFrame();
-      QFrame *sepLeft = new QFrame();
-      QLabel *label1;
-      QLabel *label2;
-      QLabel *label3;
-      QLabel *label4;
-      QLabel *label5;
-      QLabel *label6;
-      QLabel *label7;
-      QLabel *label8;
-      QLabel *label9;
-      QLabel *label10;
-      QLabel *label11;
-
-      QScrollArea *scrollArea = new QScrollArea;
-      QFrame *cardTop = new QFrame();
-      QVBoxLayout *cardTopLayout = new QVBoxLayout();
-      QFrame *theoriqueSquare;
-      QLabel *legendTheo;
-      QFrame *expSquare;
-      QLabel *legendExp;
-      QFrame *cardBottom;
-      QFrame *bottomCardSeparator;
-      QVBoxLayout *configLayoutItem;
-      QFrame *separator;
-      QJsonObject current;
-      QJsonArray histo;
 
     friend FittsController;
 };
@@ -130,7 +98,6 @@ static QString color_red = "#d36579";
 static QString color_red_focus = "#f77994";
 static QString color_white = "#ffffff";
 static QString color_grid = "#3d3f44";
-static QString  color_red_grey = "#f8f0ed";
 
 static QString color_itemList_bg = "#151618";
 static QString color_itemList_bg_focus = "#212121";
