@@ -59,6 +59,11 @@ private:
     bool isPlotHome = true;
     bool hasSimulated = false;
 
+    QList<QToolButton *> lstEyeButtons;
+    QList<QToolButton *> lstDeleteButtons;
+    QSignalMapper *eyeSignalMapper;
+    QSignalMapper *deleteSignalMapper;
+
     QDoubleSpinBox *aValue;
     QDoubleSpinBox *bValue;
     QSpinBox *nbCible;

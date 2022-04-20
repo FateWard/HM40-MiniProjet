@@ -87,7 +87,11 @@ void FittsController::backToSettings() {
     this->fittsView->mainStack->setCurrentIndex(0);
     this->calculateResultHome();
     this->addHisto();
-    this->fittsView->displayResults();
+    FittsView *f2 = this->fittsView;
+    this->fittsView->destroy();
+    this->fittsView = new FittsView(this, this->fittsModel);
+    this->start();
+    loadGraph(this->fittsView->lstEyeButtons.size()-1);
 }
 
 
@@ -416,14 +420,15 @@ void FittsController::calculateResultHome() {
 
 }
 
+//ajoute un enregistrement au fichier data.json*
 void FittsController::addHisto(){
     this->histModel->prepend(*this->fittsModel);
 
-    QDir().mkpath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation));
+    //Crée le répertoire si n'existe pas encore
+    QDir().mkpath(QDir::currentPath()+"/dataFitts");
 
-    qDebug() << QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
-
-    QString jsonPath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/data.json";
+    //chemin où est enregistré le fichier data.json
+    QString jsonPath = QDir::currentPath()+"/dataFitts/data.json";
 
     QFile fileReader(jsonPath);
     fileReader.open(QIODevice::ReadOnly);
@@ -442,9 +447,40 @@ void FittsController::addHisto(){
     fileWriter.close();
 }
 
-QJsonArray FittsController::getHisto(){
+//Supprime un enregistrement du fichier json et recharge la nouvelle page avec liste maj
+void FittsController::deleteHisto(int index){
+    QMessageBox::StandardButton confirm;
+    confirm = QMessageBox::question(this->fittsView,"Demande Suppression","Êtes vous sur de vouloir supprimer ?",
+                                    QMessageBox::Yes|QMessageBox::Cancel);
+    if(confirm == QMessageBox::Yes){
+        QString jsonPath = QDir::currentPath()+"/dataFitts/data.json";
 
-    QString jsonPath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/data.json";
+        QFile fileReader(jsonPath);
+        fileReader.open(QIODevice::ReadOnly);
+        QJsonDocument json = QJsonDocument::fromJson(fileReader.readAll());
+        QJsonArray array = json.array();
+
+        array.removeAt(index);
+        QJsonDocument newJson(array);
+        fileReader.close();
+
+        QFile fileWriter(jsonPath);
+        fileWriter.open(QIODevice::WriteOnly);
+        fileWriter.write(newJson.toJson());
+        fileWriter.close();
+
+        this->histModel->removeAt(index);
+
+        //recharger fittsView avec la liste des tests mis à jour
+        FittsView *f2 = this->fittsView;
+        this->fittsView->destroy();
+        this->fittsView = new FittsView(this, this->fittsModel);
+        this->start();
+    }
+}
+
+QJsonArray FittsController::getHisto(){
+    QString jsonPath = QDir::currentPath()+"/dataFitts/data.json";
 
     QFile fileReader(jsonPath);
     fileReader.open(QIODevice::ReadOnly);
@@ -454,5 +490,14 @@ QJsonArray FittsController::getHisto(){
     fileReader.close();
 
     return array;
+}
 
+//Fonction pour changer le graphique si un enregistrement est choisi
+void FittsController::loadGraph(int index){
+    //recuperer l'enregistrement correspondant à l'index
+    QJsonObject dataItem = getHisto().at(index).toObject();
+    //mettre les données de l'enregistrement dans le fittsModel
+    this->fittsModel->writeDataModel(dataItem);
+    this->calculateResultHome();
+    this->fittsView->displayResults();
 }

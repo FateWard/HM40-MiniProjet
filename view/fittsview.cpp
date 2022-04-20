@@ -12,13 +12,13 @@ FittsView::FittsView(FittsController *fittsController, FittsModel *fittsModel) :
 
     this->showMaximized();
 
-////////////////////////////////////////////////////////////////////////////
+    /* Barre d'outil */
     QMenu *menuQuit = menuBar()->addMenu("Quitter");
     QAction *quitAct = new QAction("Fermer l'appli");
     connect(quitAct, &QAction::triggered,[=](){QApplication::quit();});
 
     menuQuit->addAction(quitAct);
-////////////////////////////////////////////////////////////////////////////
+
 
 
     // Btn clicked
@@ -31,6 +31,23 @@ FittsView::FittsView(FittsController *fittsController, FittsModel *fittsModel) :
     connect(switchGraphHome, SIGNAL(clicked()),fittsController,SLOT(changeGraphHome())); //Bouton de changement de graphique
     connect(switchMode, SIGNAL(clicked()),fittsController,SLOT(changeMode())); //Bouton de changer de mode jour/nuit
     connect(graphZoom, SIGNAL(clicked()),fittsController, SLOT(chartZoom())); //Bouton permettant le zoom sur le graphique
+
+    this->reloadHisto();
+    //branchements de tous les eyeButton sur un SignalMapper
+    //Pour récupérer l'index du boutton sur lequel l'utilisateur a appuyé
+    for(int i=0; i<lstEyeButtons.size(); i++){
+        connect(lstEyeButtons.at(i),SIGNAL(clicked()),eyeSignalMapper,SLOT(map()));
+    }
+    //Connection du signal mappé à la fonction loadGraph
+    connect(eyeSignalMapper,SIGNAL(mapped(int)),fittsController,SLOT(loadGraph(int)));
+
+    //branchements de tous les deleteButton sur un SignalMapper
+    //Pour récupérer l'index du boutton sur lequel l'utilisateur a appuyé
+    for(int i=0; i<lstDeleteButtons.size(); i++){
+        connect(lstDeleteButtons.at(i),SIGNAL(clicked()),deleteSignalMapper,SLOT(map()));
+    }
+    //Connection du signal mappé à la fonction delete
+    connect(deleteSignalMapper,SIGNAL(mapped(int)),fittsController,SLOT(deleteHisto(int)));
 
     // SpinBox values update
     connect(aValue,SIGNAL(valueChanged(double)),fittsController,SLOT(aValueChanged(double)));
@@ -257,7 +274,7 @@ void FittsView::initWindows() {
 
 
     /**
-     * Recherche dans le fichier de suavegarde les tests déjà efféctué pour les afficher
+     * Recherche dans le fichier de sauvegarde les tests déjà efféctué pour les afficher
      */
     reloadHisto();
 
@@ -643,6 +660,12 @@ void FittsView::reloadHisto(){
 
     histo = this->fittsController->getHisto();
 
+    //nettoyage de la liste des boutons pour recréer la nouvelle
+    //Création du mapper qui va regrouper les signaux des boutons
+    lstEyeButtons.clear();
+    eyeSignalMapper = new QSignalMapper(this);
+    lstDeleteButtons.clear();
+    deleteSignalMapper = new QSignalMapper(this);
 
     for(int i = 0; i < histo.size(); i++){
         QToolButton *eyeButton;
@@ -665,6 +688,9 @@ void FittsView::reloadHisto(){
         eyeButton->setIcon(QIcon(":/icons/eyeIcon"));
         eyeButton->setIconSize(QSize(28, 28));
 
+        //Ajout du bouton à la liste des boutons et au mapper
+        lstEyeButtons.append(eyeButton);
+        eyeSignalMapper->setMapping(eyeButton,i);
 
         label11 = new QLabel(current["dateTime"].toString());
         label11->setStyleSheet("background-color: transparent; color: #ffffff; font: 20 18px 'ROBOTO';");
@@ -679,6 +705,10 @@ void FittsView::reloadHisto(){
         deleteButton->setCursor(Qt::PointingHandCursor);
         deleteButton->setIcon(QIcon(":/icons/beenIcon"));
         deleteButton->setIconSize(QSize(15, 15));
+
+        //Ajout du bouton à la liste des boutons et au mapper
+        lstDeleteButtons.append(deleteButton);
+        deleteSignalMapper->setMapping(deleteButton,i);
 
         scrollFrameLine = new QFrame();
         scrollFrameLine->setMinimumHeight(2);
