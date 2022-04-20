@@ -19,7 +19,7 @@ void FittsController::start() {
 
     this->fittsView->show();
     startSimulation();
-
+    this->fittsView->mainStack->setCurrentIndex(0);
 }
 
 void FittsController::startSimulation() {
@@ -87,11 +87,11 @@ void FittsController::backToSettings() {
     this->fittsView->mainStack->setCurrentIndex(0);
     this->calculateResultHome();
     this->addHisto();
-    FittsView *f2 = this->fittsView;
     this->fittsView->destroy();
     this->fittsView = new FittsView(this, this->fittsModel);
     this->start();
     loadGraph(this->fittsView->lstEyeButtons.size()-1);
+    this->fittsView->displayResults();
 }
 
 
@@ -472,7 +472,6 @@ void FittsController::deleteHisto(int index){
         this->histModel->removeAt(index);
 
         //recharger fittsView avec la liste des tests mis à jour
-        FittsView *f2 = this->fittsView;
         this->fittsView->destroy();
         this->fittsView = new FittsView(this, this->fittsModel);
         this->start();
