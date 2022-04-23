@@ -40,7 +40,13 @@ void FittsController::quit() {
 }
 
 void FittsController::changeMode(){
-    this->fittsView->change_color(true);
+    if(color){
+            color = false;
+            this->fittsView->change_color(color);
+        }else{
+            color = true;
+            this->fittsView->change_color(color);
+        }
 }
 
 void FittsController::changeGraphHome(){
@@ -124,6 +130,7 @@ void FittsController::zoomCancel()
 void FittsController::aValueChanged(double value) {
     this->fittsModel->a = value;
     calculateResultHome();
+    this->fittsView->displayResults();
 }
 void FittsController::bValueChanged(double value) {
     this->fittsModel->b = value;
@@ -242,7 +249,7 @@ void FittsController::calculateResultHome() {
     chartHome->setAnimationOptions(QChart::AllAnimations);
     chartHome->createDefaultAxes();
     chartHome->legend()->setVisible(false);
-    chartHome->legend()->setLabelBrush(QBrush(QColor(color_white)));
+    chartHome->legend()->setLabelBrush(QBrush(QColor(color_blue)));
     chartHome->setBackgroundVisible(false);
 
     QLineSeries *expSeries = new QLineSeries;
@@ -256,7 +263,7 @@ void FittsController::calculateResultHome() {
     chartDistanceHome->setAnimationOptions(QChart::AllAnimations);
     chartDistanceHome->createDefaultAxes();
     chartDistanceHome->legend()->setVisible(false);
-    chartDistanceHome->legend()->setLabelBrush(QBrush(QColor(color_white)));
+    chartDistanceHome->legend()->setLabelBrush(QBrush(QColor(color_blue)));
     chartDistanceHome->setBackgroundVisible(false);
 
     QLineSeries *expSeriesDistance = new QLineSeries;
@@ -353,8 +360,8 @@ void FittsController::calculateResultHome() {
     axis->setLabelsFont(reperes);
     axisDistance->setLabelsFont(reperes);
 
-    axis->setLabelsColor(color_white);
-    axisDistance->setLabelsColor(color_white);
+    axis->setLabelsColor(color_blue);
+    axisDistance->setLabelsColor(color_blue);
 
     chartHome->setAxisX(axis,expSeries);
     chartHome->setAxisX(axis,fittsSeries);
@@ -362,7 +369,7 @@ void FittsController::calculateResultHome() {
     QValueAxis *axisY = new QValueAxis;
     axisY->setTitleText("temps (en ms)");
     axisY->setGridLinePen(dotted);
-    axisY->setLabelsColor(color_white);
+    axisY->setLabelsColor(color_blue);
     chartHome->setAxisY(axisY,expSeries);
 
     //New plotHomeDistance axes
@@ -375,7 +382,7 @@ void FittsController::calculateResultHome() {
     QValueAxis *axisYDistance = new QValueAxis;
     axisYDistance->setTitleText("temps (en ms)");
     axisYDistance->setGridLinePen(dotted);
-    axisYDistance->setLabelsColor(color_white);
+    axisYDistance->setLabelsColor(color_blue);
     chartDistanceHome->addAxis(axisYDistance, Qt::AlignLeft);
     chartDistanceHome->setAxisY(axisYDistance,fittsSeriesDistance);
 

@@ -56,6 +56,9 @@ private:
     QChart *chartHome;
     QChart *chartDistanceHome;
 
+    bool color;
+    QLabel *labelStart;
+
 private slots:
     void quit();
     void startSimulation();

@@ -61,112 +61,118 @@ FittsView::FittsView(FittsController *fittsController, FittsModel *fittsModel) :
 FittsView::~FittsView() {}
 
 void FittsView::change_color(bool choix){
-
-
     if(choix){
-        this->switchMode->setIcon(QIcon(":/icons/nightModeButton"));
-        this->setStyleSheet("QWidget{background-color:" + color_red_grey + ";}");
-        frameRight->setStyleSheet("background-color: " + color_red_grey );
-        scrollFrame->setStyleSheet("background-color: " + color_white );
-        scrollArea->setStyleSheet("QScrollArea{border: none} QScrollBar:vertical{background-color: #F90000;} QScrollBar::handle:vertical{background-color: #F90050;} QScrollBar::add-page:vertical { background-color: #D12525; } QScrollBar::sub-page:vertical { background-color: #D12525; }");
-        sepLeft->setStyleSheet("background-color:" + color_white);
-        startBtn->setStyleSheet("QPushButton{color: "+color_dark_grey+"; background-color: " + color_blue + "; border-radius:" + button_radius +"; font: bold 20px 'ROBOTO'; padding: 20px; margin: 0px 30px} QPushButton:hover{background-color: " + color_blue_focus + "};");
+            this->switchMode->setIcon(QIcon(":/icons/nightModeButton"));
+
+            this->setStyleSheet("QWidget{background-color:" + color_white_pink + ";}");
+            frameRight->setStyleSheet("background-color: " + color_white_blue );
+            scrollFrame->setStyleSheet("background-color: " + color_white_blue );
+            scrollArea->setStyleSheet("QScrollArea{border: none} QScrollBar:vertical{background-color: #D3EFFF;} QScrollBar::handle:vertical{background-color: #D3EFFF;} QScrollBar::add-page:vertical { background-color: #D3EFFF; } QScrollBar::sub-page:vertical { background-color: #D3EFFF; }");
+            sepLeft->setStyleSheet("background-color:" + color_dark_grey);
+            startBtn->setStyleSheet("QPushButton{color: "+color_blue+"; background-color: " + color_blue + "; border-radius:" + button_radius +"; font: bold 20px 'ROBOTO'; padding: 20px; margin: 0px 30px} QPushButton:hover{background-color: " + color_blue_focus + "};");
+
+            //changement des couleurs de la police des labels
+            label1->setStyleSheet("color: #00dac7; font: bold 30px 'ROBOTO'; padding: 10px");
+            label2->setStyleSheet("font: bold 20px 'ROBOTO'; color:" + color_blue);
+            label3->setStyleSheet("font: bold 20px 'ROBOTO'; color:" + color_blue);
+            label4->setStyleSheet("font: italic 18px 'ROBOTO'; color:" + color_light_grey);
+            label5->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_blue);
+            label6->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_blue);
+            label7->setStyleSheet("margin-left: 28px; font: bold 30px 'ROBOTO'; color:" + color_blue);
+            label8->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_blue);
+            label9->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_blue);
+            label10->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_blue);
+            label11->setStyleSheet("background-color: transparent; color: #ffffff; font: 20 18px 'ROBOTO';");
 
 
-        //changement des couleurs de la police des labels en Noir
-        label1->setStyleSheet("color: #121212; font: bold 30px 'ROBOTO'; padding: 10px");
-        label2->setStyleSheet("font: bold 20px 'ROBOTO'; color:" + color_black);
-        label3->setStyleSheet("font: bold 20px 'ROBOTO'; color:" + color_black);
-        label4->setStyleSheet("font: italic 18px 'ROBOTO'; color:" + color_light_grey);
-        label5->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_black);
-        label6->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_black);
-        label7->setStyleSheet("margin-left: 28px; font: bold 30px 'ROBOTO'; color:" + color_black);
-        label8->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_black);
-        label9->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_black);
-        label10->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_black);
-        label11->setStyleSheet("background-color: transparent; color: #121212; font: 20 18px 'ROBOTO';");
+
+            legendTheo->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_blue);
+            legendExp->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_blue);
+            ecartType->setStyleSheet("font: 14px 'ROBOTO'; color:" + color_blue);
 
 
+            diffMoy->setStyleSheet("font: 14px 'ROBOTO'; color:" + color_blue);
+            erreurType->setStyleSheet("font: 14px 'ROBOTO'; color:" + color_blue);
+            itc95->setStyleSheet("font: 14px 'ROBOTO'; color:" + color_blue);
+            graphTitleHome->setStyleSheet("font: bold 30px 'ROBOTO'; color:" + color_blue);
+            legendTheo->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_blue);
+            legendExp->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_blue);
+            bottomCardSeparator->setStyleSheet("background-color:" + color_blue);
+            aValue->setStyleSheet("QDoubleSpinBox{font: 26px 'ROBOTO'; color:" + color_blue + ";} QDoubleSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButton); width: 30px; height: 30px; margin-left: 40px} QDoubleSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButton); width: 30px; height: 30px; margin-right: 40px}");
+            bValue->setStyleSheet("QDoubleSpinBox{font: 26px 'ROBOTO'; color:" + color_blue + ";} QDoubleSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButton); width: 30px; height: 30px; margin-left: 40px} QDoubleSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButton); width: 30px; height: 30px; margin-right: 40px}");
+            nbCible->setStyleSheet("QSpinBox{font: 26px 'ROBOTO'; color:" + color_blue + ";} QSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButtonDark); width: 30px; height: 30px; margin-left: 40px} QSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButtonDark); width: 30px; height: 30px; margin-right: 40px}");;
+            minSize->setStyleSheet("QSpinBox{font: 26px 'ROBOTO'; color:" + color_blue + ";} QSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButtonDark); width: 30px; height: 30px; margin-left: 40px} QSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButtonDark); width: 30px; height: 30px; margin-right: 40px}");
+            maxSize->setStyleSheet("QSpinBox{font: 26px 'ROBOTO'; color:" + color_blue + ";} QSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButtonDark); width: 30px; height: 30px; margin-left: 40px} QSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButtonDark); width: 30px; height: 30px; margin-right: 40px}");
+            startBtn->setStyleSheet("QPushButton{color: "+color_white+"; background-color: " + color_blue + "; border-radius:" + button_radius +"; font: bold 20px 'ROBOTO'; padding: 20px; margin: 0px 30px} QPushButton:hover{background-color: " + color_blue_focus + "};");
+            backBtn->setStyleSheet("QPushButton{color: "+color_blue+"; background-color: " + color_blue + "; border-radius:" + button_radius +"; font: bold 20px 'ROBOTO'; padding: 20px; margin: 30px} QPushButton:hover{background-color: " + color_red_focus + "};");
+            this->testLabel->setStyleSheet("color: "+color_blue+"; font: 30px 'ROBOTO'; margin: 30px");
+            cardBottom->setStyleSheet("background-color:" + color_white_blue + "; border-radius: 20px");
+            cardTop->setStyleSheet("background-color:" + color_white_blue + "; border-radius: 20px");
+            switchGraphHome->setStyleSheet("QToolButton{color: "+color_light_grey+"; border-radius:" + button_radius +"; font: bold 10px 'ROBOTO'; padding: 10px; margin-right: 40px}");
 
-        graphTitleHome->setStyleSheet("font: bold 30px 'ROBOTO'; color:" + color_black);
-        legendTheo->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_black);
-        legendExp->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_black);
-        ecartType->setStyleSheet("font: 14px 'ROBOTO'; color:" + color_black);
-
-
-        diffMoy->setStyleSheet("font: 14px 'ROBOTO'; color:" + color_black);
-        erreurType->setStyleSheet("font: 14px 'ROBOTO'; color:" + color_black);
-        itc95->setStyleSheet("font: 14px 'ROBOTO'; color:" + color_black);
-        graphTitleHome->setStyleSheet("font: bold 30px 'ROBOTO'; color:" + color_black);
-        legendTheo->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_black);
-        legendExp->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_black);
-        bottomCardSeparator->setStyleSheet("background-color:" + color_black);
-        aValue->setStyleSheet("QDoubleSpinBox{font: 26px 'ROBOTO'; color:" + color_black + ";} QDoubleSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButton); width: 30px; height: 30px; margin-left: 40px} QDoubleSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButton); width: 30px; height: 30px; margin-right: 40px}");
-        bValue->setStyleSheet("QDoubleSpinBox{font: 26px 'ROBOTO'; color:" + color_black + ";} QDoubleSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButton); width: 30px; height: 30px; margin-left: 40px} QDoubleSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButton); width: 30px; height: 30px; margin-right: 40px}");
-        nbCible->setStyleSheet("QSpinBox{font: 26px 'ROBOTO'; color:" + color_black + ";} QSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButtonDark); width: 30px; height: 30px; margin-left: 40px} QSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButtonDark); width: 30px; height: 30px; margin-right: 40px}");;
-        minSize->setStyleSheet("QSpinBox{font: 26px 'ROBOTO'; color:" + color_black + ";} QSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButtonDark); width: 30px; height: 30px; margin-left: 40px} QSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButtonDark); width: 30px; height: 30px; margin-right: 40px}");
-        maxSize->setStyleSheet("QSpinBox{font: 26px 'ROBOTO'; color:" + color_black + ";} QSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButtonDark); width: 30px; height: 30px; margin-left: 40px} QSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButtonDark); width: 30px; height: 30px; margin-right: 40px}");
-        startBtn->setStyleSheet("QPushButton{color: "+color_black+"; background-color: " + color_blue + "; border-radius:" + button_radius +"; font: bold 20px 'ROBOTO'; padding: 20px; margin: 0px 30px} QPushButton:hover{background-color: " + color_blue_focus + "};");
-        backBtn->setStyleSheet("QPushButton{color: "+color_black+"; background-color: " + color_red + "; border-radius:" + button_radius +"; font: bold 20px 'ROBOTO'; padding: 20px; margin: 30px} QPushButton:hover{background-color: " + color_red_focus + "};");
-        this->testLabel->setStyleSheet("color: "+color_black+"; font: 30px 'ROBOTO'; margin: 30px");
-
-        cardBottom->setStyleSheet("background-color:" + color_white + "; border-radius: 20px");
-        cardTop->setStyleSheet("background-color:" + color_white + "; border-radius: 20px");
-        switchGraphHome->setStyleSheet("QToolButton{color: "+color_red_grey+"; border-radius:" + button_radius +"; font: bold 10px 'ROBOTO'; padding: 10px; margin-right: 40px}");
-        backBtn->setStyleSheet("QPushButton{color: "+color_white+"; background-color: " + color_black + "; border-radius:" + button_radius +"; font: bold 20px 'ROBOTO'; padding: 20px; margin: 30px} QPushButton:hover{background-color: " + color_red_focus + "};");
+          backBtn->setStyleSheet("QPushButton{color: "+color_black+"; background-color: " + color_white_blue + "; border-radius:" + button_radius +"; font: bold 20px 'ROBOTO'; padding: 20px; margin: 30px} QPushButton:hover{background-color: " + color_red_focus + "};");
 
 
-        for(int i = 0; i < histo.size(); i++){
-             current = histo.at(i).toObject();
-             label11 = new QLabel(current["dateTime"].toString());
-             label11->setStyleSheet("background-color: transparent; color: #121212; font: 20 18px 'ROBOTO';");
-             label11->setAlignment(Qt::AlignCenter);
-    }
+            for(int i = 0; i < histo.size(); i++){
+                 current = histo.at(i).toObject();
+                 label11 = new QLabel(current["dateTime"].toString());
+                 label11->setStyleSheet("background-color: transparent; color: #121212; font: 20 18px 'ROBOTO';");
+                 label11->setAlignment(Qt::AlignCenter);
+        }
 
 
-    }else{
+        }else{
 
-        this->switchMode->setIcon(QIcon(":/icons/dayModeButton"));
+            this->switchMode->setIcon(QIcon(":/icons/dayModeButton"));
 
+            this->setStyleSheet("QWidget{background-color:" + color_bg + ";}");
+            frameRight->setStyleSheet("background-color: " + color_black );
+            scrollFrame->setStyleSheet("background-color: " + color_itemList_bg );
+            scrollArea->setStyleSheet("QScrollArea{border: none} QScrollBar:vertical{background-color: #242424;} QScrollBar::handle:vertical{background-color: #323232;} QScrollBar::add-page:vertical { background-color: #242424; } QScrollBar::sub-page:vertical { background-color: #242424; }");
+            sepLeft->setStyleSheet("background-color:" + color_dark_grey);
+            startBtn->setStyleSheet("QPushButton{color: "+color_white+"; background-color: " + color_blue + "; border-radius:" + button_radius +"; font: bold 20px 'ROBOTO'; padding: 20px; margin: 0px 30px} QPushButton:hover{background-color: " + color_blue_focus + "};");
 
-        label3->setStyleSheet("font: bold 20px 'ROBOTO'; color:" + color_white);
-        label4->setStyleSheet("font: italic 18px 'ROBOTO'; color:" + color_light_grey);
-        label5->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_white);
-        label6->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_white);
-        label7->setStyleSheet("margin-left: 28px; font: bold 30px 'ROBOTO'; color:" + color_white);
-        label8->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_white);
-        label9->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_white);
-        label10->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_white);
-        label11->setStyleSheet("background-color: transparent; color: #ffffff; font: 20 18px 'ROBOTO';");
-
-
-        graphTitleHome->setStyleSheet("font: bold 30px 'ROBOTO'; color:" + color_white);
-        legendTheo->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_white);
-        legendExp->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_white);
-        ecartType->setStyleSheet("font: 14px 'ROBOTO'; color:" + color_white);
-
-
-        diffMoy->setStyleSheet("font: 14px 'ROBOTO'; color:" + color_white);
-        erreurType->setStyleSheet("font: 14px 'ROBOTO'; color:" + color_white);
-        itc95->setStyleSheet("font: 14px 'ROBOTO'; color:" + color_white);
-        graphTitleHome->setStyleSheet("font: bold 30px 'ROBOTO'; color:" + color_white);
-        legendTheo->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_white);
-        legendExp->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_white);
-        bottomCardSeparator->setStyleSheet("background-color:" + color_white);
-        aValue->setStyleSheet("QDoubleSpinBox{font: 26px 'ROBOTO'; color:" + color_white + ";} QDoubleSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButton); width: 30px; height: 30px; margin-left: 40px} QDoubleSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButton); width: 30px; height: 30px; margin-right: 40px}");
-        bValue->setStyleSheet("QDoubleSpinBox{font: 26px 'ROBOTO'; color:" + color_white + ";} QDoubleSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButton); width: 30px; height: 30px; margin-left: 40px} QDoubleSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButton); width: 30px; height: 30px; margin-right: 40px}");
-        nbCible->setStyleSheet("QSpinBox{font: 26px 'ROBOTO'; color:" + color_white + ";} QSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButtonDark); width: 30px; height: 30px; margin-left: 40px} QSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButtonDark); width: 30px; height: 30px; margin-right: 40px}");;
-        minSize->setStyleSheet("QSpinBox{font: 26px 'ROBOTO'; color:" + color_white + ";} QSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButtonDark); width: 30px; height: 30px; margin-left: 40px} QSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButtonDark); width: 30px; height: 30px; margin-right: 40px}");
-        maxSize->setStyleSheet("QSpinBox{font: 26px 'ROBOTO'; color:" + color_white + ";} QSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButtonDark); width: 30px; height: 30px; margin-left: 40px} QSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButtonDark); width: 30px; height: 30px; margin-right: 40px}");
-        startBtn->setStyleSheet("QPushButton{color: "+color_white+"; background-color: " + color_blue + "; border-radius:" + button_radius +"; font: bold 20px 'ROBOTO'; padding: 20px; margin: 0px 30px} QPushButton:hover{background-color: " + color_blue_focus + "};");
-        backBtn->setStyleSheet("QPushButton{color: "+color_white+"; background-color: " + color_red + "; border-radius:" + button_radius +"; font: bold 20px 'ROBOTO'; padding: 20px; margin: 30px} QPushButton:hover{background-color: " + color_red_focus + "};");
-        this->testLabel->setStyleSheet("color: "+color_white+"; font: 30px 'ROBOTO'; margin: 30px");
-        cardBottom->setStyleSheet("background-color:" + color_black + "; border-radius: 20px");
-        cardTop->setStyleSheet("background-color:" + color_black + "; border-radius: 20px");
-        switchGraphHome->setStyleSheet("QToolButton{color: "+color_light_grey+"; border-radius:" + button_radius +"; font: bold 10px 'ROBOTO'; padding: 10px; margin-right: 40px}");
+            //changement des couleurs de la police des labels
+            label1->setStyleSheet("color: #ffffff; font: bold 30px 'ROBOTO'; padding: 10px");
+            label2->setStyleSheet("font: bold 20px 'ROBOTO'; color:" + color_white);
+            label3->setStyleSheet("font: bold 20px 'ROBOTO'; color:" + color_blue);
+            label4->setStyleSheet("font: italic 18px 'ROBOTO'; color:" + color_light_grey);
+            label5->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_blue);
+            label6->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_blue);
+            label7->setStyleSheet("margin-left: 28px; font: bold 30px 'ROBOTO'; color:" + color_white);
+            label8->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_white);
+            label9->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_white);
+            label10->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_white);
+            label11->setStyleSheet("background-color: transparent; color: #ffffff; font: 20 18px 'ROBOTO';");
 
 
-    }
+            graphTitleHome->setStyleSheet("font: bold 30px 'ROBOTO'; color:" + color_white);
+            legendTheo->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_white);
+            legendExp->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_white);
+            ecartType->setStyleSheet("font: 14px 'ROBOTO'; color:" + color_white);
+
+
+            diffMoy->setStyleSheet("font: 14px 'ROBOTO'; color:" + color_white);
+            erreurType->setStyleSheet("font: 14px 'ROBOTO'; color:" + color_white);
+            itc95->setStyleSheet("font: 14px 'ROBOTO'; color:" + color_white);
+            graphTitleHome->setStyleSheet("font: bold 30px 'ROBOTO'; color:" + color_white);
+            legendTheo->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_white);
+            legendExp->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_white);
+            bottomCardSeparator->setStyleSheet("background-color:" + color_white);
+            aValue->setStyleSheet("QDoubleSpinBox{font: 26px 'ROBOTO'; color:" + color_white + ";} QDoubleSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButton); width: 30px; height: 30px; margin-left: 40px} QDoubleSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButton); width: 30px; height: 30px; margin-right: 40px}");
+            bValue->setStyleSheet("QDoubleSpinBox{font: 26px 'ROBOTO'; color:" + color_white + ";} QDoubleSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButton); width: 30px; height: 30px; margin-left: 40px} QDoubleSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButton); width: 30px; height: 30px; margin-right: 40px}");
+            nbCible->setStyleSheet("QSpinBox{font: 26px 'ROBOTO'; color:" + color_white + ";} QSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButtonDark); width: 30px; height: 30px; margin-left: 40px} QSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButtonDark); width: 30px; height: 30px; margin-right: 40px}");;
+            minSize->setStyleSheet("QSpinBox{font: 26px 'ROBOTO'; color:" + color_white + ";} QSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButtonDark); width: 30px; height: 30px; margin-left: 40px} QSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButtonDark); width: 30px; height: 30px; margin-right: 40px}");
+            maxSize->setStyleSheet("QSpinBox{font: 26px 'ROBOTO'; color:" + color_white + ";} QSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButtonDark); width: 30px; height: 30px; margin-left: 40px} QSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButtonDark); width: 30px; height: 30px; margin-right: 40px}");
+            startBtn->setStyleSheet("QPushButton{color: "+color_white+"; background-color: " + color_blue + "; border-radius:" + button_radius +"; font: bold 20px 'ROBOTO'; padding: 20px; margin: 0px 30px} QPushButton:hover{background-color: " + color_blue_focus + "};");
+            backBtn->setStyleSheet("QPushButton{color: "+color_white+"; background-color: " + color_red + "; border-radius:" + button_radius +"; font: bold 20px 'ROBOTO'; padding: 20px; margin: 30px} QPushButton:hover{background-color: " + color_red_focus + "};");
+            this->testLabel->setStyleSheet("color: "+color_white+"; font: 30px 'ROBOTO'; margin: 30px");
+            cardBottom->setStyleSheet("background-color:" + color_black + "; border-radius: 20px");
+            cardTop->setStyleSheet("background-color:" + color_black + "; border-radius: 20px");
+            switchGraphHome->setStyleSheet("QToolButton{color: "+color_light_grey+"; border-radius:" + button_radius +"; font: bold 10px 'ROBOTO'; padding: 10px; margin-right: 40px}");
+
+
+        }
 
 
 }
@@ -635,7 +641,7 @@ void FittsView::initWindows() {
 
 void FittsView::updateTestMsg() {
     this->testLabel->setText("<strong style='font-size:100px'>" + QString::number(this->fittsModel->cibleLeft) + "</strong><br>cibles restantes");
-    this->testLabel->setStyleSheet("color: "+color_white+"; font: 30px 'ROBOTO'; margin: 30px");
+    this->testLabel->setStyleSheet("color: "+color_blue+"; font: 30px 'ROBOTO'; margin: 30px");
 
 }
 
