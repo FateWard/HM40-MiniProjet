@@ -18,9 +18,6 @@ public:
     QJsonObject writeDataJson();
     QJsonObject QPointToQJsonobject(QPoint);
 
-    void writeDataModel(QJsonObject dataItem);
-    QPoint QJsonObjectToQPoint(QJsonValueRef jsonPoint);
-
 private:
 
     int cibleLeft = 0;

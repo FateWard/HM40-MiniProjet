@@ -56,9 +56,6 @@ private:
     QChart *chartHome;
     QChart *chartDistanceHome;
 
-    bool color;
-    QLabel *labelStart;
-
 private slots:
     void quit();
     void startSimulation();
@@ -76,9 +73,6 @@ private slots:
     void maxSizeChanged(int value);
 
     void cibleClicked(int x, int y);
-
-    void deleteHisto(int index);
-    void loadGraph(int index);
 };
 
 #endif // FITTSCONTROLLER_H
