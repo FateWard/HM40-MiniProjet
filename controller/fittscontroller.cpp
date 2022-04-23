@@ -19,7 +19,7 @@ void FittsController::start() {
 
     this->fittsView->show();
     startSimulation();
-
+    this->fittsView->mainStack->setCurrentIndex(0);
 }
 
 void FittsController::startSimulation() {
@@ -40,7 +40,13 @@ void FittsController::quit() {
 }
 
 void FittsController::changeMode(){
-    this->fittsView->change_color(true);
+    if(color){
+            color = false;
+            this->fittsView->change_color(color);
+        }else{
+            color = true;
+            this->fittsView->change_color(color);
+        }
 }
 
 void FittsController::changeGraphHome(){
@@ -87,6 +93,10 @@ void FittsController::backToSettings() {
     this->fittsView->mainStack->setCurrentIndex(0);
     this->calculateResultHome();
     this->addHisto();
+    this->fittsView->destroy();
+    this->fittsView = new FittsView(this, this->fittsModel);
+    this->start();
+    loadGraph(this->fittsView->lstEyeButtons.size()-1);
     this->fittsView->displayResults();
 }
 
@@ -120,6 +130,7 @@ void FittsController::zoomCancel()
 void FittsController::aValueChanged(double value) {
     this->fittsModel->a = value;
     calculateResultHome();
+    this->fittsView->displayResults();
 }
 void FittsController::bValueChanged(double value) {
     this->fittsModel->b = value;
@@ -238,7 +249,7 @@ void FittsController::calculateResultHome() {
     chartHome->setAnimationOptions(QChart::AllAnimations);
     chartHome->createDefaultAxes();
     chartHome->legend()->setVisible(false);
-    chartHome->legend()->setLabelBrush(QBrush(QColor(color_white)));
+    chartHome->legend()->setLabelBrush(QBrush(QColor(color_blue)));
     chartHome->setBackgroundVisible(false);
 
     QLineSeries *expSeries = new QLineSeries;
@@ -252,7 +263,7 @@ void FittsController::calculateResultHome() {
     chartDistanceHome->setAnimationOptions(QChart::AllAnimations);
     chartDistanceHome->createDefaultAxes();
     chartDistanceHome->legend()->setVisible(false);
-    chartDistanceHome->legend()->setLabelBrush(QBrush(QColor(color_white)));
+    chartDistanceHome->legend()->setLabelBrush(QBrush(QColor(color_blue)));
     chartDistanceHome->setBackgroundVisible(false);
 
     QLineSeries *expSeriesDistance = new QLineSeries;
@@ -349,8 +360,8 @@ void FittsController::calculateResultHome() {
     axis->setLabelsFont(reperes);
     axisDistance->setLabelsFont(reperes);
 
-    axis->setLabelsColor(color_white);
-    axisDistance->setLabelsColor(color_white);
+    axis->setLabelsColor(color_blue);
+    axisDistance->setLabelsColor(color_blue);
 
     chartHome->setAxisX(axis,expSeries);
     chartHome->setAxisX(axis,fittsSeries);
@@ -358,7 +369,7 @@ void FittsController::calculateResultHome() {
     QValueAxis *axisY = new QValueAxis;
     axisY->setTitleText("temps (en ms)");
     axisY->setGridLinePen(dotted);
-    axisY->setLabelsColor(color_white);
+    axisY->setLabelsColor(color_blue);
     chartHome->setAxisY(axisY,expSeries);
 
     //New plotHomeDistance axes
@@ -371,7 +382,7 @@ void FittsController::calculateResultHome() {
     QValueAxis *axisYDistance = new QValueAxis;
     axisYDistance->setTitleText("temps (en ms)");
     axisYDistance->setGridLinePen(dotted);
-    axisYDistance->setLabelsColor(color_white);
+    axisYDistance->setLabelsColor(color_blue);
     chartDistanceHome->addAxis(axisYDistance, Qt::AlignLeft);
     chartDistanceHome->setAxisY(axisYDistance,fittsSeriesDistance);
 
@@ -416,14 +427,15 @@ void FittsController::calculateResultHome() {
 
 }
 
+//ajoute un enregistrement au fichier data.json*
 void FittsController::addHisto(){
     this->histModel->prepend(*this->fittsModel);
 
-    QDir().mkpath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation));
+    //Crée le répertoire si n'existe pas encore
+    QDir().mkpath(QDir::currentPath()+"/dataFitts");
 
-    qDebug() << QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
-
-    QString jsonPath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/data.json";
+    //chemin où est enregistré le fichier data.json
+    QString jsonPath = QDir::currentPath()+"/dataFitts/data.json";
 
     QFile fileReader(jsonPath);
     fileReader.open(QIODevice::ReadOnly);
@@ -442,9 +454,39 @@ void FittsController::addHisto(){
     fileWriter.close();
 }
 
-QJsonArray FittsController::getHisto(){
+//Supprime un enregistrement du fichier json et recharge la nouvelle page avec liste maj
+void FittsController::deleteHisto(int index){
+    QMessageBox::StandardButton confirm;
+    confirm = QMessageBox::question(this->fittsView,"Demande Suppression","Êtes vous sur de vouloir supprimer ?",
+                                    QMessageBox::Yes|QMessageBox::Cancel);
+    if(confirm == QMessageBox::Yes){
+        QString jsonPath = QDir::currentPath()+"/dataFitts/data.json";
 
-    QString jsonPath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/data.json";
+        QFile fileReader(jsonPath);
+        fileReader.open(QIODevice::ReadOnly);
+        QJsonDocument json = QJsonDocument::fromJson(fileReader.readAll());
+        QJsonArray array = json.array();
+
+        array.removeAt(index);
+        QJsonDocument newJson(array);
+        fileReader.close();
+
+        QFile fileWriter(jsonPath);
+        fileWriter.open(QIODevice::WriteOnly);
+        fileWriter.write(newJson.toJson());
+        fileWriter.close();
+
+        this->histModel->removeAt(index);
+
+        //recharger fittsView avec la liste des tests mis à jour
+        this->fittsView->destroy();
+        this->fittsView = new FittsView(this, this->fittsModel);
+        this->start();
+    }
+}
+
+QJsonArray FittsController::getHisto(){
+    QString jsonPath = QDir::currentPath()+"/dataFitts/data.json";
 
     QFile fileReader(jsonPath);
     fileReader.open(QIODevice::ReadOnly);
@@ -454,5 +496,14 @@ QJsonArray FittsController::getHisto(){
     fileReader.close();
 
     return array;
+}
 
+//Fonction pour changer le graphique si un enregistrement est choisi
+void FittsController::loadGraph(int index){
+    //recuperer l'enregistrement correspondant à l'index
+    QJsonObject dataItem = getHisto().at(index).toObject();
+    //mettre les données de l'enregistrement dans le fittsModel
+    this->fittsModel->writeDataModel(dataItem);
+    this->calculateResultHome();
+    this->fittsView->displayResults();
 }

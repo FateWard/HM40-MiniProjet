@@ -59,6 +59,11 @@ private:
     bool isPlotHome = true;
     bool hasSimulated = false;
 
+    QList<QToolButton *> lstEyeButtons;
+    QList<QToolButton *> lstDeleteButtons;
+    QSignalMapper *eyeSignalMapper;
+    QSignalMapper *deleteSignalMapper;
+
     QDoubleSpinBox *aValue;
     QDoubleSpinBox *bValue;
     QSpinBox *nbCible;
@@ -131,9 +136,13 @@ static QString color_red_focus = "#f77994";
 static QString color_white = "#ffffff";
 static QString color_grid = "#3d3f44";
 static QString  color_red_grey = "#f8f0ed";
-
+static QString  color_red_light = "#FF0000";
 static QString color_itemList_bg = "#151618";
 static QString color_itemList_bg_focus = "#212121";
+
+static QString color_white_pink = "#F3FFFE";
+static QString color_white_blue = "#D3EFFF";
+
 
 static QString button_radius = "15px";
 
