@@ -91,6 +91,7 @@ private:
 
     QWidget *mainWidget = new QWidget;
       QFrame *frameRight = new QFrame();
+      QFrame *buttonFrame = new QFrame();
       QFrame *scrollFrame = new QFrame();
       QFrame *sepLeft = new QFrame();
       QLabel *label1;
@@ -104,6 +105,7 @@ private:
       QLabel *label9;
       QLabel *label10;
       QLabel *label11;
+      QLabel *label12;
 
       QScrollArea *scrollArea = new QScrollArea;
       QFrame *cardTop = new QFrame();
@@ -114,6 +116,9 @@ private:
       QLabel *legendExp;
       QFrame *cardBottom;
       QFrame *bottomCardSeparator;
+      QFrame *optionSeparator;
+      QFrame *statSeparator;
+      QFrame *testSeparator;
       QVBoxLayout *configLayoutItem;
       QFrame *separator;
       QJsonObject current;

@@ -66,6 +66,7 @@ void FittsView::change_color(bool choix){
 
             this->setStyleSheet("QWidget{background-color:" + color_white_pink + ";}");
             frameRight->setStyleSheet("background-color: " + color_white_blue );
+            buttonFrame->setStyleSheet("background-color: " +color_white_blue);
             scrollFrame->setStyleSheet("background-color: " + color_white_blue );
             scrollArea->setStyleSheet("QScrollArea{border: none} QScrollBar:vertical{background-color: #D3EFFF;} QScrollBar::handle:vertical{background-color: #D3EFFF;} QScrollBar::add-page:vertical { background-color: #D3EFFF; } QScrollBar::sub-page:vertical { background-color: #D3EFFF; }");
             sepLeft->setStyleSheet("background-color:" + color_dark_grey);
@@ -83,6 +84,7 @@ void FittsView::change_color(bool choix){
             label9->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_blue);
             label10->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_blue);
             label11->setStyleSheet("background-color: transparent; color: #ffffff; font: 20 18px 'ROBOTO';");
+            label12->setStyleSheet("font: bold 20px 'ROBOTO'; color:" + color_blue);
 
 
 
@@ -98,6 +100,9 @@ void FittsView::change_color(bool choix){
             legendTheo->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_blue);
             legendExp->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_blue);
             bottomCardSeparator->setStyleSheet("background-color:" + color_blue);
+            optionSeparator->setStyleSheet("background-color:" + color_blue);
+            statSeparator->setStyleSheet("background-color:" + color_blue);
+            testSeparator->setStyleSheet("background-color:" + color_blue);
             aValue->setStyleSheet("QDoubleSpinBox{font: 26px 'ROBOTO'; color:" + color_blue + ";} QDoubleSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButton); width: 30px; height: 30px; margin-left: 40px} QDoubleSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButton); width: 30px; height: 30px; margin-right: 40px}");
             bValue->setStyleSheet("QDoubleSpinBox{font: 26px 'ROBOTO'; color:" + color_blue + ";} QDoubleSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButton); width: 30px; height: 30px; margin-left: 40px} QDoubleSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButton); width: 30px; height: 30px; margin-right: 40px}");
             nbCible->setStyleSheet("QSpinBox{font: 26px 'ROBOTO'; color:" + color_blue + ";} QSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButtonDark); width: 30px; height: 30px; margin-left: 40px} QSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButtonDark); width: 30px; height: 30px; margin-right: 40px}");;
@@ -127,6 +132,7 @@ void FittsView::change_color(bool choix){
 
             this->setStyleSheet("QWidget{background-color:" + color_bg + ";}");
             frameRight->setStyleSheet("background-color: " + color_black );
+            buttonFrame->setStyleSheet("background-color: " +color_black);
             scrollFrame->setStyleSheet("background-color: " + color_itemList_bg );
             scrollArea->setStyleSheet("QScrollArea{border: none} QScrollBar:vertical{background-color: #242424;} QScrollBar::handle:vertical{background-color: #323232;} QScrollBar::add-page:vertical { background-color: #242424; } QScrollBar::sub-page:vertical { background-color: #242424; }");
             sepLeft->setStyleSheet("background-color:" + color_dark_grey);
@@ -144,6 +150,8 @@ void FittsView::change_color(bool choix){
             label9->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_white);
             label10->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_white);
             label11->setStyleSheet("background-color: transparent; color: #ffffff; font: 20 18px 'ROBOTO';");
+            label12->setStyleSheet("font: bold 20px 'ROBOTO'; color:" + color_white);
+
 
 
             graphTitleHome->setStyleSheet("font: bold 30px 'ROBOTO'; color:" + color_white);
@@ -159,6 +167,9 @@ void FittsView::change_color(bool choix){
             legendTheo->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_white);
             legendExp->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_white);
             bottomCardSeparator->setStyleSheet("background-color:" + color_white);
+            optionSeparator->setStyleSheet("background-color:" + color_white);
+            statSeparator->setStyleSheet("background-color:" + color_white);
+            testSeparator->setStyleSheet("background-color:" + color_white);
             aValue->setStyleSheet("QDoubleSpinBox{font: 26px 'ROBOTO'; color:" + color_white + ";} QDoubleSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButton); width: 30px; height: 30px; margin-left: 40px} QDoubleSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButton); width: 30px; height: 30px; margin-right: 40px}");
             bValue->setStyleSheet("QDoubleSpinBox{font: 26px 'ROBOTO'; color:" + color_white + ";} QDoubleSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButton); width: 30px; height: 30px; margin-left: 40px} QDoubleSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButton); width: 30px; height: 30px; margin-right: 40px}");
             nbCible->setStyleSheet("QSpinBox{font: 26px 'ROBOTO'; color:" + color_white + ";} QSpinBox::down-button{subcontrol-origin: margin; subcontrol-position: center left; image: url(:/icons/moinsButtonDark); width: 30px; height: 30px; margin-left: 40px} QSpinBox::up-button{subcontrol-origin: margin; subcontrol-position: center right; image: url(:/icons/plusButtonDark); width: 30px; height: 30px; margin-right: 40px}");;
@@ -199,23 +210,46 @@ void FittsView::initWindows() {
     QVBoxLayout *settingsLayoutLeft = new QVBoxLayout(settingsWidget);
     QVBoxLayout *settingsLayoutRight = new QVBoxLayout(settingsWidget);
 
+    QVBoxLayout *listeTestLayout = new QVBoxLayout();
+
     frameRight = new QFrame();
-    frameRight->setStyleSheet("background-color: " + color_black);
+    frameRight->setStyleSheet("background-color: " + color_black + "; border-radius: 20px");
     frameRight->setMinimumWidth(350);
     frameRight->setMaximumWidth(350);
-    frameRight->setLayout(settingsLayoutRight);
-    settingsLayoutRight->setMargin(0);
-    settingsLayoutLeft->setMargin(40);
+    frameRight->setLayout(listeTestLayout);
+    settingsLayoutRight->setMargin(20);
+    settingsLayoutLeft->setMargin(20);
 
     settingsLayout->setContentsMargins(QMargins(0,0,0,0));
     settingsLayout->addLayout(settingsLayoutLeft);
+    settingsLayout->addLayout(settingsLayoutRight);
 
-    QVBoxLayout *rightBoxLayout = new QVBoxLayout(settingsWidget);//Layout pour la partie droite
+    QVBoxLayout *rightTopLayout = new QVBoxLayout();
+
+    buttonFrame = new QFrame();
+    buttonFrame->setMinimumWidth(350);
+    buttonFrame->setMaximumWidth(350);
+    buttonFrame->setStyleSheet("background-color:" + color_black + "; border-radius: 20px");
+    buttonFrame->setLayout(rightTopLayout);
+
+    label12 = new QLabel();
+    label12->setText("Options");
+    label12->setStyleSheet("font: bold 20px 'ROBOTO'; color:" + color_white);
+    label12->setAlignment(Qt::AlignCenter);
+    rightTopLayout->addWidget(label12);
+
+    optionSeparator = new QFrame();
+    optionSeparator->setMinimumHeight(2);
+    optionSeparator->setMaximumHeight(2);
+    optionSeparator->setStyleSheet("background-color:" + color_white);
+    rightTopLayout->addWidget(optionSeparator);
+
     QHBoxLayout *buttonLayout = new QHBoxLayout();//Layout pour gérer les boutons
-    rightBoxLayout->addLayout(buttonLayout);
+
+
 
 //Bouton de switch de mode pour le graphique
-    switchGraphHome = new QToolButton(this);
+    switchGraphHome = new QToolButton();
     switchGraphHome->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     switchGraphHome->setMinimumWidth(120);
     switchGraphHome->setMaximumWidth(120);
@@ -226,7 +260,7 @@ void FittsView::initWindows() {
     switchGraphHome->setIcon(QIcon(":/icons/switchGraphe_1"));
     switchGraphHome->setIconSize(switchGraphHome->size());
 //Bouton de switch de mode
-    switchMode = new QToolButton(this);
+    switchMode = new QToolButton();
     switchMode->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     switchMode->setMinimumSize(120, 120);
     switchMode->setMaximumSize(120, 120);
@@ -237,23 +271,21 @@ void FittsView::initWindows() {
 
 
 //Bouton pour faire un zoom sur le graphique
-    graphZoom = new QToolButton(this);
+    graphZoom = new QToolButton();
     graphZoom->setIcon(QIcon(":/icons/zoomButton"));
     graphZoom->setIconSize(QSize(130,130));
     graphZoom->setMinimumSize(50, 50);
     graphZoom->setMaximumSize(50, 50);
     graphZoom->setIconSize(graphZoom->size());
 
-    buttonLayout->setMargin(20);
-    buttonLayout->addStretch();
+    //buttonLayout->setMargin(20);
+    //buttonLayout->addStretch();
 
     buttonLayout->addWidget(switchGraphHome); //Ajout du bouton de switch du graphique
     buttonLayout->addWidget(switchMode); //Ajout du bouton de switch de mode
     buttonLayout->addWidget(graphZoom); //Ajout du bouton de zoom sur le graphique
-
-    rightBoxLayout->addWidget(frameRight); //Ajout
-    settingsLayout->addLayout(rightBoxLayout);
-
+    rightTopLayout->addLayout(buttonLayout);
+    settingsLayoutRight->addWidget(buttonFrame);
 
     /**
      * Partie droite basse de la fenêtre
@@ -265,7 +297,13 @@ void FittsView::initWindows() {
     label1->setMaximumHeight(100);
     label1->setMinimumHeight(100);
     label1->setMargin(0);
-    settingsLayoutRight->addWidget(label1);
+    listeTestLayout->addWidget(label1);
+
+    testSeparator = new QFrame();
+    testSeparator->setMinimumHeight(2);
+    testSeparator->setMaximumHeight(2);
+    testSeparator->setStyleSheet("background-color:" + color_white);
+    listeTestLayout->addWidget(testSeparator);
 
     this->scrollAreaLayout = new QVBoxLayout;
     scrollFrame = new QFrame();
@@ -289,7 +327,8 @@ void FittsView::initWindows() {
     QScrollArea *scrollArea = new QScrollArea;
     scrollArea->setWidget(scrollFrame);
     scrollArea->setStyleSheet("QScrollArea{border: none} QScrollBar:vertical{background-color: #242424;} QScrollBar::handle:vertical{background-color: #323232;} QScrollBar::add-page:vertical { background-color: #242424; } QScrollBar::sub-page:vertical { background-color: #242424; }");
-    settingsLayoutRight->addWidget(scrollArea);
+    listeTestLayout->addWidget(scrollArea);
+    settingsLayoutRight->addWidget(frameRight);
 
     //Droite basse - fin
 
@@ -327,6 +366,12 @@ void FittsView::initWindows() {
     label2->setStyleSheet("font: bold 20px 'ROBOTO'; color:" + color_white);
     label2->setAlignment(Qt::AlignCenter);
     cardTopLayout->addWidget(label2);
+
+    statSeparator = new QFrame();
+    statSeparator->setMinimumHeight(2);
+    statSeparator->setMaximumHeight(2);
+    statSeparator->setStyleSheet("background-color:" + color_white);
+    cardTopLayout->addWidget(statSeparator);
 
     ecartType = new QLabel();
     ecartType->setStyleSheet("font: 14px 'ROBOTO'; color:" + color_white);
