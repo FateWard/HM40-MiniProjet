@@ -46,6 +46,7 @@ private:
 
     void calculateResultHome();
     void addHisto();
+    void reloadFittsView();
 
 
     FittsModel *fittsModel;

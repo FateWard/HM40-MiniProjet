@@ -13,6 +13,7 @@ FittsController::FittsController() {
     this->fittsView = new FittsView(this, this->fittsModel);
     this->histModel = new QList<FittsModel>();
     this->start();
+    this->color = false;
 }
 
 void FittsController::start() {
@@ -93,9 +94,7 @@ void FittsController::backToSettings() {
     this->fittsView->mainStack->setCurrentIndex(0);
     this->calculateResultHome();
     this->addHisto();
-    this->fittsView->destroy();
-    this->fittsView = new FittsView(this, this->fittsModel);
-    this->start();
+    reloadFittsView();
     loadGraph(this->fittsView->lstEyeButtons.size()-1);
     this->fittsView->displayResults();
 }
@@ -479,9 +478,7 @@ void FittsController::deleteHisto(int index){
         this->histModel->removeAt(index);
 
         //recharger fittsView avec la liste des tests mis à jour
-        this->fittsView->destroy();
-        this->fittsView = new FittsView(this, this->fittsModel);
-        this->start();
+        reloadFittsView();
     }
 }
 
@@ -506,4 +503,19 @@ void FittsController::loadGraph(int index){
     this->fittsModel->writeDataModel(dataItem);
     this->calculateResultHome();
     this->fittsView->displayResults();
+    this->fittsView->hasSimulated = true;
+}
+
+//Fonction pour rechager la page après une suppression ou un test
+void FittsController::reloadFittsView(){
+    QRect geo = this->fittsView->geometry();
+    this->fittsView->destroy();
+    this->fittsView = new FittsView(this, this->fittsModel);
+    //pour remttre le mode clair s'il était sélectionné
+    this->start();
+    this->fittsView->setGeometry(geo);
+    if(color == true){
+        color = false;
+        this->changeMode();
+    }
 }
