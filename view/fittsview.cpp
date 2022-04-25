@@ -32,7 +32,6 @@ FittsView::FittsView(FittsController *fittsController, FittsModel *fittsModel) :
     connect(switchMode, SIGNAL(clicked()),fittsController,SLOT(changeMode())); //Bouton de changer de mode jour/nuit
     connect(graphZoom, SIGNAL(clicked()),fittsController, SLOT(chartZoom())); //Bouton permettant le zoom sur le graphique
 
-    this->reloadHisto();
     //branchements de tous les eyeButton sur un SignalMapper
     //Pour récupérer l'index du boutton sur lequel l'utilisateur a appuyé
     for(int i=0; i<lstEyeButtons.size(); i++){
@@ -60,13 +59,15 @@ FittsView::FittsView(FittsController *fittsController, FittsModel *fittsModel) :
 
 FittsView::~FittsView() {}
 
+//gestion de la couleur de tous les éléments visuels en fonction du mode jour/nuit
+//si choix == true alors mode jour, choix == false mode nuit
 void FittsView::change_color(bool choix){
     if(choix){
             this->switchMode->setIcon(QIcon(":/icons/nightModeButton"));
 
             this->setStyleSheet("QWidget{background-color:" + color_white_pink + ";}");
-            frameRight->setStyleSheet("background-color: " + color_white_blue );
-            buttonFrame->setStyleSheet("background-color: " +color_white_blue);
+            frameRight->setStyleSheet("background-color: " + color_white_blue + "; border-radius: 20px");
+            buttonFrame->setStyleSheet("background-color: " +color_white_blue + "; border-radius: 20px");
             scrollFrame->setStyleSheet("background-color: " + color_white_blue );
             scrollArea->setStyleSheet("QScrollArea{border: none} QScrollBar:vertical{background-color: #D3EFFF;} QScrollBar::handle:vertical{background-color: #D3EFFF;} QScrollBar::add-page:vertical { background-color: #D3EFFF; } QScrollBar::sub-page:vertical { background-color: #D3EFFF; }");
             sepLeft->setStyleSheet("background-color:" + color_dark_grey);
@@ -115,24 +116,20 @@ void FittsView::change_color(bool choix){
             cardTop->setStyleSheet("background-color:" + color_white_blue + "; border-radius: 20px");
             switchGraphHome->setStyleSheet("QToolButton{color: "+color_light_grey+"; border-radius:" + button_radius +"; font: bold 10px 'ROBOTO'; padding: 10px; margin-right: 40px}");
 
-          backBtn->setStyleSheet("QPushButton{color: "+color_black+"; background-color: " + color_white_blue + "; border-radius:" + button_radius +"; font: bold 20px 'ROBOTO'; padding: 20px; margin: 30px} QPushButton:hover{background-color: " + color_red_focus + "};");
-
-
-            for(int i = 0; i < histo.size(); i++){
-                 current = histo.at(i).toObject();
-                 label11 = new QLabel(current["dateTime"].toString());
-                 label11->setStyleSheet("background-color: transparent; color: #121212; font: 20 18px 'ROBOTO';");
-                 label11->setAlignment(Qt::AlignCenter);
-        }
-
-
+            backBtn->setStyleSheet("QPushButton{color: "+color_black+"; background-color: " + color_white_blue + "; border-radius:" + button_radius +"; font: bold 20px 'ROBOTO'; padding: 20px; margin: 30px} QPushButton:hover{background-color: " + color_red_focus + "};");
+            //liste des dates des tests
+            for(int i=0; i < lstlabelDate.size(); i++){
+                current = histo.at(i).toObject();
+                lstlabelDate.at(i)->setText(current["dateTime"].toString());
+                lstlabelDate.at(i)->setStyleSheet("background-color: transparent; color: " + color_blue + "; font: 20 18px 'ROBOTO';");
+                lstlabelDate.at(i)->setAlignment(Qt::AlignCenter);
+            }
         }else{
-
             this->switchMode->setIcon(QIcon(":/icons/dayModeButton"));
 
             this->setStyleSheet("QWidget{background-color:" + color_bg + ";}");
-            frameRight->setStyleSheet("background-color: " + color_black );
-            buttonFrame->setStyleSheet("background-color: " +color_black);
+            frameRight->setStyleSheet("background-color: " + color_black + "; border-radius: 20px");
+            buttonFrame->setStyleSheet("background-color: " +color_black + "; border-radius: 20px");
             scrollFrame->setStyleSheet("background-color: " + color_itemList_bg );
             scrollArea->setStyleSheet("QScrollArea{border: none} QScrollBar:vertical{background-color: #242424;} QScrollBar::handle:vertical{background-color: #323232;} QScrollBar::add-page:vertical { background-color: #242424; } QScrollBar::sub-page:vertical { background-color: #242424; }");
             sepLeft->setStyleSheet("background-color:" + color_dark_grey);
@@ -141,10 +138,10 @@ void FittsView::change_color(bool choix){
             //changement des couleurs de la police des labels
             label1->setStyleSheet("color: #ffffff; font: bold 30px 'ROBOTO'; padding: 10px");
             label2->setStyleSheet("font: bold 20px 'ROBOTO'; color:" + color_white);
-            label3->setStyleSheet("font: bold 20px 'ROBOTO'; color:" + color_blue);
+            label3->setStyleSheet("font: bold 20px 'ROBOTO'; color:" + color_white);
             label4->setStyleSheet("font: italic 18px 'ROBOTO'; color:" + color_light_grey);
-            label5->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_blue);
-            label6->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_blue);
+            label5->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_white);
+            label6->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_white);
             label7->setStyleSheet("margin-left: 28px; font: bold 30px 'ROBOTO'; color:" + color_white);
             label8->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_white);
             label9->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_white);
@@ -152,13 +149,10 @@ void FittsView::change_color(bool choix){
             label11->setStyleSheet("background-color: transparent; color: #ffffff; font: 20 18px 'ROBOTO';");
             label12->setStyleSheet("font: bold 20px 'ROBOTO'; color:" + color_white);
 
-
-
             graphTitleHome->setStyleSheet("font: bold 30px 'ROBOTO'; color:" + color_white);
             legendTheo->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_white);
             legendExp->setStyleSheet("font: 20 20px 'ROBOTO'; color:" + color_white);
             ecartType->setStyleSheet("font: 14px 'ROBOTO'; color:" + color_white);
-
 
             diffMoy->setStyleSheet("font: 14px 'ROBOTO'; color:" + color_white);
             erreurType->setStyleSheet("font: 14px 'ROBOTO'; color:" + color_white);
@@ -181,13 +175,17 @@ void FittsView::change_color(bool choix){
             cardBottom->setStyleSheet("background-color:" + color_black + "; border-radius: 20px");
             cardTop->setStyleSheet("background-color:" + color_black + "; border-radius: 20px");
             switchGraphHome->setStyleSheet("QToolButton{color: "+color_light_grey+"; border-radius:" + button_radius +"; font: bold 10px 'ROBOTO'; padding: 10px; margin-right: 40px}");
-
-
+            //liste des dates des tests
+            for(int i=0; i < lstlabelDate.size(); i++){
+                current = histo.at(i).toObject();
+                lstlabelDate.at(i)->setText(current["dateTime"].toString());
+                lstlabelDate.at(i)->setStyleSheet("background-color: transparent; color: " + color_white + "; font: 20 18px 'ROBOTO';");
+                lstlabelDate.at(i)->setAlignment(Qt::AlignCenter);
+            }
         }
-
-
 }
 
+//création et placement de tous les objets de l'interface visuelle
 void FittsView::initWindows() {
 
     mainWidget = new QWidget; //Widget principal
@@ -214,8 +212,8 @@ void FittsView::initWindows() {
 
     frameRight = new QFrame();
     frameRight->setStyleSheet("background-color: " + color_black + "; border-radius: 20px");
-    frameRight->setMinimumWidth(350);
-    frameRight->setMaximumWidth(350);
+    frameRight->setMinimumWidth(400);
+    frameRight->setMaximumWidth(400);
     frameRight->setLayout(listeTestLayout);
     settingsLayoutRight->setMargin(20);
     settingsLayoutLeft->setMargin(20);
@@ -227,8 +225,8 @@ void FittsView::initWindows() {
     QVBoxLayout *rightTopLayout = new QVBoxLayout();
 
     buttonFrame = new QFrame();
-    buttonFrame->setMinimumWidth(350);
-    buttonFrame->setMaximumWidth(350);
+    buttonFrame->setMinimumWidth(400);
+    buttonFrame->setMaximumWidth(400);
     buttonFrame->setStyleSheet("background-color:" + color_black + "; border-radius: 20px");
     buttonFrame->setLayout(rightTopLayout);
 
@@ -684,12 +682,14 @@ void FittsView::initWindows() {
 
 }
 
+//maj du message de cibles restantes après un clic dans une cible
 void FittsView::updateTestMsg() {
     this->testLabel->setText("<strong style='font-size:100px'>" + QString::number(this->fittsModel->cibleLeft) + "</strong><br>cibles restantes");
     this->testLabel->setStyleSheet("color: "+color_blue+"; font: 30px 'ROBOTO'; margin: 30px");
 
 }
 
+//définit le texte écrit dans les labels des statistiques
 void FittsView::displayResults() {
     this->diffMoy->setText("Différence moyenne = " + QString::number(this->fittsModel->diffMoy)+ " ms");
     this->ecartType->setText("Écart type = " + QString::number(this->fittsModel->ecartType) + " ms");
@@ -697,6 +697,8 @@ void FittsView::displayResults() {
     this->itc95->setText("Intervalle de conf à 95% = " + QString::number(this->fittsModel->itc95) + " ms");
 }
 
+//charger l'historique des enregistrements
+//créer un item visuel et ses boutons pour chaque enregistrement
 void FittsView::reloadHisto(){
 
     while(this->scrollAreaLayout->layout()->takeAt(0) != NULL){
@@ -718,6 +720,7 @@ void FittsView::reloadHisto(){
     lstDeleteButtons.clear();
     deleteSignalMapper = new QSignalMapper(this);
 
+    lstlabelDate.clear();
     for(int i = 0; i < histo.size(); i++){
         QToolButton *eyeButton;
 
@@ -729,6 +732,7 @@ void FittsView::reloadHisto(){
         scrollFrameItem->setMinimumHeight(100);
         scrollFrameItem->setStyleSheet(".QFrame:hover{background-color:" + color_itemList_bg_focus + "}");
 
+        //création du bouton pour sélectionner un enregistrement
         eyeButton = new QToolButton();
         eyeButton->setMinimumWidth(40);
         eyeButton->setMinimumHeight(40);
@@ -743,10 +747,14 @@ void FittsView::reloadHisto(){
         lstEyeButtons.append(eyeButton);
         eyeSignalMapper->setMapping(eyeButton,i);
 
+        //création du label affichant la date d'un enregistrement
         label11 = new QLabel(current["dateTime"].toString());
         label11->setStyleSheet("background-color: transparent; color: #ffffff; font: 20 18px 'ROBOTO';");
         label11->setAlignment(Qt::AlignCenter);
 
+        lstlabelDate.append(label11);
+
+        //création du bouton pour supprimer un enregistrement
         deleteButton = new QToolButton();
         deleteButton->setMinimumWidth(25);
         deleteButton->setMinimumHeight(25);

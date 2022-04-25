@@ -16,6 +16,7 @@ FittsController::FittsController() {
     this->color = false;
 }
 
+//initialise la page fittsView
 void FittsController::start() {
 
     this->fittsView->show();
@@ -23,6 +24,7 @@ void FittsController::start() {
     this->fittsView->mainStack->setCurrentIndex(0);
 }
 
+//initialise une partie du test Fitts
 void FittsController::startSimulation() {
     this->fittsView->mainStack->setCurrentIndex(1);
     this->fittsModel->cibleLeft = this->fittsModel->nbCible;
@@ -36,10 +38,12 @@ void FittsController::startSimulation() {
     this->initGame();
 }
 
+//ferme l'application
 void FittsController::quit() {
     QApplication::quit();
 }
 
+//s'occupe du mode jour/nuit via un booleen
 void FittsController::changeMode(){
     if(color){
             color = false;
@@ -50,6 +54,7 @@ void FittsController::changeMode(){
         }
 }
 
+//changer le mode du graphique
 void FittsController::changeGraphHome(){
     if(this->fittsView->switchGraphHome->minimumHeight() == 150){
         this->fittsView->switchGraphHome->setIcon(QIcon(":/icons/switchGraphe_2"));
@@ -89,7 +94,7 @@ void FittsController::chartZoom()
 
 }
 
-
+//fait le retour sur la page des paramètres après un test fini
 void FittsController::backToSettings() {
     this->fittsView->mainStack->setCurrentIndex(0);
     this->calculateResultHome();
@@ -99,7 +104,7 @@ void FittsController::backToSettings() {
     this->fittsView->displayResults();
 }
 
-
+//fait le retour sur la page des paramètres si le test est abandonné
 void FittsController::cancel() {
     this->fittsView->mainStack->setCurrentIndex(0);
 }
@@ -125,7 +130,7 @@ void FittsController::zoomCancel()
 
 }
 
-
+//ensembles de fonctions pour gérer le changement des paramètres et coeffs
 void FittsController::aValueChanged(double value) {
     this->fittsModel->a = value;
     calculateResultHome();
@@ -144,6 +149,8 @@ void FittsController::minSizeChanged(int value) {
 void FittsController::maxSizeChanged(int value) {
     this->fittsModel->maxSize = value;
 }
+
+//gére les données après le clic sur une cible pendant le test
 void FittsController::cibleClicked(int x, int y) {
     if(this->fittsModel->cercleCenter.isEmpty()) {
         // Si vide alors premier click, on demarre le timer
@@ -169,6 +176,7 @@ void FittsController::cibleClicked(int x, int y) {
     }
 }
 
+//s'occupe d'afficher une cible sur la page de test et stocker les données de la cible
 void FittsController::nextCible() {
     if(!this->fittsModel->cercleCenter.isEmpty())
         this->fittsModel->cibleLeft--;
@@ -203,12 +211,13 @@ void FittsController::nextCible() {
     scene->addEllipse(posX - (size / 2), posY - (size / 2), size, size, QPen(QColor(color_red)),QBrush(QColor(color_red)))->setCursor(Qt::PointingHandCursor);
 }
 
-
+//met fin au test après lorsque le nombre de cible défini est atteint
 void FittsController::finish() {
     this->fittsView->graphicView->setEnabled(false);
     backToSettings();
 }
 
+//initialise la page de test
 void FittsController::initGame() {
     QGraphicsScene *scene = this->fittsView->scene;
     scene->clear();
@@ -239,7 +248,8 @@ void FittsController::initGame() {
     scene->addWidget(labelStart);
 }
 
-
+//calcule les valeurs(moy, ecart-type, intervalle de conf...) et courbes du modéle courant
+//trace les courbes sur le graphique
 void FittsController::calculateResultHome() {
 
     chartHome = new QChart;
@@ -426,7 +436,7 @@ void FittsController::calculateResultHome() {
 
 }
 
-//ajoute un enregistrement au fichier data.json*
+//ajoute un enregistrement au fichier data.json
 void FittsController::addHisto(){
     this->histModel->prepend(*this->fittsModel);
 
@@ -482,6 +492,7 @@ void FittsController::deleteHisto(int index){
     }
 }
 
+//retourne un tableau de tous les enregistrements du fichier json
 QJsonArray FittsController::getHisto(){
     QString jsonPath = QDir::currentPath()+"/dataFitts/data.json";
 
@@ -511,9 +522,10 @@ void FittsController::reloadFittsView(){
     QRect geo = this->fittsView->geometry();
     this->fittsView->destroy();
     this->fittsView = new FittsView(this, this->fittsModel);
-    //pour remttre le mode clair s'il était sélectionné
     this->start();
+    //conservation de la taille de la fenêtre
     this->fittsView->setGeometry(geo);
+    //pour remttre le mode clair s'il était sélectionné
     if(color == true){
         color = false;
         this->changeMode();

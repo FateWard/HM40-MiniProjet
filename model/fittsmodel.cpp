@@ -88,6 +88,7 @@ void FittsModel::writeDataModel(QJsonObject dataItem){
     }
 }
 
+//conversion d'un point en objet json
 QJsonObject FittsModel::QPointToQJsonobject(QPoint point) {
 
     QJsonObject converter;
@@ -98,6 +99,7 @@ QJsonObject FittsModel::QPointToQJsonobject(QPoint point) {
 
 }
 
+//conversion d'un objet json en un point
 QPoint FittsModel::QJsonObjectToQPoint(QJsonValueRef jsonPoint){
     QPoint point;
     QJsonObject jsonObject = jsonPoint.toObject();

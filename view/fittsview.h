@@ -115,6 +115,7 @@ private:
       QFrame *expSquare;
       QLabel *legendExp;
       QFrame *cardBottom;
+      QList<QLabel *> lstlabelDate;
       QFrame *bottomCardSeparator;
       QFrame *optionSeparator;
       QFrame *statSeparator;
