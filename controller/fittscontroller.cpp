@@ -518,4 +518,5 @@ void FittsController::reloadFittsView(){
         color = false;
         this->changeMode();
     }
+    this->fittsView->showMaximized();
 }
