@@ -84,7 +84,6 @@ void FittsView::change_color(bool choix){
             label8->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_blue);
             label9->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_blue);
             label10->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_blue);
-            label11->setStyleSheet("background-color: transparent; color: #ffffff; font: 20 18px 'ROBOTO';");
             label12->setStyleSheet("font: bold 20px 'ROBOTO'; color:" + color_blue);
 
 
@@ -146,7 +145,6 @@ void FittsView::change_color(bool choix){
             label8->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_white);
             label9->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_white);
             label10->setStyleSheet("font: 20px 'ROBOTO'; color:" + color_white);
-            label11->setStyleSheet("background-color: transparent; color: #ffffff; font: 20 18px 'ROBOTO';");
             label12->setStyleSheet("font: bold 20px 'ROBOTO'; color:" + color_white);
 
             graphTitleHome->setStyleSheet("font: bold 30px 'ROBOTO'; color:" + color_white);
