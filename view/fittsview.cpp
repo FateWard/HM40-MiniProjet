@@ -397,7 +397,7 @@ void FittsView::initWindows() {
     titleLegend->addSpacing(50);
     graphTitleHome = new QLabel(this);
     graphTitleHome->setMinimumWidth(500);
-    graphTitleHome->setText("Temps = f( cible )");
+    graphTitleHome->setText("Temps = f(cible)");
     graphTitleHome->setStyleSheet("font: bold 30px 'ROBOTO'; color:" + color_white);
     titleLegend->addWidget(graphTitleHome);
 

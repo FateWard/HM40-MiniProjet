@@ -61,7 +61,7 @@ void FittsController::changeGraphHome(){
         this->fittsView->switchGraphHome->setMinimumHeight(149);
         this->fittsView->plotHomeDistance->setVisible(true);
         this->fittsView->plotHome->setVisible(false);
-        this->fittsView->graphTitleHome->setText("Temps = f( log(D/L+1) )");
+        this->fittsView->graphTitleHome->setText("Temps = f(log(D/L+1))");
         this->fittsView->isPlotHome = false;
     }else{
         this->fittsView->switchGraphHome->setIcon(QIcon(":/icons/switchGraphe_1"));
@@ -301,7 +301,7 @@ void FittsController::calculateResultHome() {
         fittsValues.append(value);
         fittsSeries->append(i,value);
 
-        axis->append(QString::number(i + 1) + "<br />T: "+QString::number(T)+"<br />D: " + QString::number(D),i);
+        axis->append(QString::number(i + 1) + "<br />T: "+QString::number(T)+"<br />D: " + QString::number(D,'f', 2),i);
 
         //Ajout d'une nouvelle courbe : le temps exécution (ordonnée) en fonction de la distance relative log(D/L + 1) en abscisse
         //On utilise D en ordonnée et value en abscisse
